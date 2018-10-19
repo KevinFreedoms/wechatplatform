@@ -1,0 +1,36 @@
+@charset "utf-8";
+/* CSS Document */
+/**************************************会员管理******************************/
+.chosedata{
+	margin-right:15px;
+}
+.chosedata{
+	float:left;
+	position:relative;
+}
+.chosedata i{
+	position:absolute;
+	right:15px;
+	top:8px;
+}
+.recordtype li{
+	padding:15px 50px;
+	float:left;
+}
+.recordtb{
+	padding:0px 15px 15px 15px;
+}
+.menuchange{
+	margin-bottom:0px;
+}
+.labeltag{
+	float:left;
+}
+.rechargetb{
+	margin-top:5px;
+}
+.rechargetb .btn-danger{
+	margin-top:10px;
+	float:left;
+	margin-bottom:10px;
+}

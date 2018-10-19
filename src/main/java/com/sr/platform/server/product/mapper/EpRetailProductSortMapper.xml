@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sr.platform.server.product.dao.ProductDao">
+    <resultMap id="EpRetailProductSortMap" type="com.sr.platform.server.product.bean.EpRetailProductSort">
+        <result column="recKey" property="recKey"/>
+        <result column="sortId" property="sortId"/>
+        <result column="sortName" property="sortName"/>
+        <result column="showIndex" property="showIndex"/>
+    </resultMap>
+    <select id="getSortAll" resultMap="EpRetailProductSortMap">
+        select
+        recKey,
+        sortId,
+        sortName
+        FROM
+        ep_retailproductsort
+        ORDER BY
+        showIndex
+    </select>
+
+</mapper>

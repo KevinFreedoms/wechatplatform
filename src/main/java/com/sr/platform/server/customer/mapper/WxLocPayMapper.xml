@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sr.platform.server.customer.dao.IWxLocPayDao">
+    <resultMap id="LocPayResultMap" type="com.sr.platform.server.customer.bean.WxLocPay">
+        <result column="recKey" property="recKey"/>
+        <result column="locId" property="locId"/>
+        <result column="locName" property="locName"/>
+        <result column="password" property="password"/>
+        <result column="remark" property="remark"/>
+        <result column="createUserId" property="createUserId"/>
+        <result column="createDate" property="createDate"/>
+        <result column="lastUpdateUserId" property="lastUpdateUserId"/>
+        <result column="lastUpDate" property="lastUpDate"/>
+    </resultMap>
+
+    <select id="findLocPay" resultMap="LocPayResultMap" parameterType="java.lang.String">
+        SELECT
+              recKey,locId,locName,password
+        FROM  wx_locpay
+        WHERE locId =  #{id}
+    </select>
+
+    <insert id="insertLocPay" parameterType="com.sr.platform.server.customer.bean.WxLocPay">
+        insert into wx_locpay(locId,locName,password,createUserId,lastupdateUserId)
+        values( #{locId,jdbcType=VARCHAR}, #{locName,jdbcType=VARCHAR},#{password,jdbcType=VARCHAR},#{createUserId,jdbcType=VARCHAR},#{lastUpdateUserId,jdbcType=VARCHAR})
+    </insert>
+
+    <update id="updateLocPay" parameterType="com.sr.platform.server.customer.bean.WxLocPay">
+        update wx_locpay
+        <set >
+            <if test="password != null" >
+                password = #{password,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where recKey = #{recKey,jdbcType=BIGINT}
+    </update>
+</mapper>

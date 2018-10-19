@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sr.platform.server.customer.dao.IWxRoleDao">
+    <resultMap id="baseResultMap" type="com.sr.platform.server.customer.bean.WxRole">
+        <result column="recKey" property="recKey"/>
+        <result column="roleId" property="roleId"/>
+        <result column="roleName" property="roleName"/>
+        <result column="status" property="status"/>
+        <result column="remark" property="remark"/>
+        <result column="createUserId" property="createUserId"/>
+        <result column="createDate" property="createDate"/>
+        <result column="lastUpdateUserId" property="lastUpdateUserId"/>
+        <result column="lastUpDate" property="lastUpDate"/>
+    </resultMap>
+    <parameterMap id="role" type="com.sr.platform.server.customer.bean.WxRole"/>
+    <select id="findRoleAll" resultMap="baseResultMap">
+        SELECT
+        recKey,roleId,roleName,status,remark,createUserId,createDate,lastUpdateUserId,lastUpDate
+        FROM  wx_role
+    </select>
+
+    <select id="findRole" resultMap="baseResultMap" parameterType="java.lang.String">
+        SELECT
+        recKey,roleId,roleName,status,remark,createUserId,createDate,lastUpdateUserId,lastUpDate
+        FROM  wx_role
+        WHERE roleId= #{id}
+    </select>
+
+    <select id="getRoleMaxNum" resultMap="baseResultMap">
+        SELECT IFNULL(max(roleId),0) AS roleId
+        FROM wx_role
+        WHERE roleId!='9999';
+    </select>
+
+    <insert id="insertRole" parameterType="com.sr.platform.server.customer.bean.WxRole">
+        INSERT INTO wx_role(roleId,roleName,status,remark,createUserId,lastupdateUserId)
+        VALUE (#{roleId,jdbcType=BIGINT},#{roleName,jdbcType=VARCHAR},#{status,jdbcType=BIGINT},#{remark,jdbcType=VARCHAR},#{createUserId,jdbcType=VARCHAR},#{lastUpdateUserId,jdbcType=VARCHAR})
+    </insert>
+
+    <update id="updateRole"  parameterType="com.sr.platform.server.customer.bean.WxRole">
+        UPDATE wx_role
+        <set >
+            <if test="roleName != null" >
+                roleName = #{roleName,jdbcType=VARCHAR},
+            </if>
+            <if test="remark != null" >
+                remark = #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null" >
+                status = #{status,jdbcType=INTEGER},
+            </if>
+            <if test="lastUpDate != null" >
+                lastUpDate = #{lastUpDate,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        WHERE recKey = #{recKey,jdbcType=BIGINT}
+    </update>
+</mapper>

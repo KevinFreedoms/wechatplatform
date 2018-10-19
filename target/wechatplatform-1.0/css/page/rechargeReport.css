@@ -1,0 +1,105 @@
+@charset "utf-8";
+/* CSS Document */
+.couponfilter {
+	float:left;
+    margin-right: 30px;
+}
+.yhmenu {
+	width:inherit;
+}
+.filter .filtertitle {
+    float: left;
+    margin-top: 5px;
+    color: #999999;
+    margin-right: 8px;
+}
+.chosedata{
+	float:left;
+	position:relative;
+}
+.chosedata i{
+	position:absolute;
+	right:15px;
+	top:7px;
+}
+.multiselect-container>li>a>label>input[type=checkbox]{
+	height:27px;
+	margin-top:-3px;
+} 
+.multiselect-native-select .btn-group{
+	width:230px!important;
+}
+.dropdown-toggle{
+	text-align:left;
+}
+.btn .caret{
+	float:right;
+	margin-top:6px;
+}
+.input-group-addon:first-child{
+	display:none;
+}
+.multiselect-clear-filter{
+	height:34px;
+}
+.glyphicon{
+	font-size:14px;
+}
+.multiselect-container{
+	max-height:300px!important;
+	width:230px;
+	overflow-x:scroll!important;
+}
+.tableft{
+	margin-right:10px;
+}
+.storesum{
+	text-align:center;
+	color:#333;
+	font-weight:bold;
+}
+.rechargeOrderinfo{
+	margin-bottom:10px;
+	float:left;
+	width:33.3%;
+}
+.rechargeOrderinfo .message{
+	margin-bottom:10px;
+}
+.message .labelname{
+	font-weight:bold;
+	color:#333;
+}
+.bootstrap-table .search{
+	float:right!important;
+}
+.btngroup{
+	margin-top:8px;
+}
+.btngroup a{
+	font-size:14px;
+}
+.btngroup a i{
+	margin-right:5px;
+}
+.sureorder h4,.bodycont h4{
+	text-align:center;
+	font-weight:bold;
+	color:#333;
+	font-family: 微软雅黑;
+}
+.sureorder{
+    border-top: 3px double #bbbbbb;
+    padding-top:10px;
+    margin-top: 20px;
+}
+.sureorder h4{
+	text-align:left;
+}
+.sureorder .defaultLabel{
+	color:#333;
+	font-weight:bold;
+}
+.sureorder span{
+	margin-right:15px;
+}

@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sr.platform.server.company.dao.IWxCompanyDao">
+    <resultMap id="CompanyResultMap" type="com.sr.platform.server.company.bean.WxCompany">
+        <result column="recKey" property="recKey"/>
+        <result column="companyId" property="companyId"/>
+        <result column="companyName" property="companyName"/>
+        <result column="contactPerson" property="contactPerson"/>
+        <result column="contactAddress" property="contactAddress"/>
+        <result column="contactWay" property="contactWay"/>
+        <result column="status" property="status"/>
+        <result column="locId" property="locId"/>
+        <result column="locName" property="locName"/>
+        <result column="remark" property="remark"/>
+        <result column="createUserId" property="createUserId"/>
+        <result column="createDate" property="createDate"/>
+        <result column="lastUpdateUserId" property="lastUpdateUserId"/>
+        <result column="lastUpDate" property="lastUpDate"/>
+    </resultMap>
+    <parameterMap id="company" type="com.sr.platform.server.company.bean.WxCompany"/>
+    <select id="findCompanyAll" resultMap="CompanyResultMap" parameterMap="company">
+        SELECT
+            wx_company.recKey,companyId,companyName,contactPerson,contactAddress,contactWay,status,wx_company.locId,locName,wx_company.createUserId,
+            wx_company.createDate,wx_company.lastUpdateUserId,wx_company.lastUpDate
+        FROM  wx_company,ep_loc
+        WHERE wx_company.locId = ep_loc.locId AND
+               (ep_loc.orgId =  #{locId} OR ep_loc.locId =  #{locId})
+    </select>
+
+    <select id="findCompanyTransfer" resultMap="CompanyResultMap" parameterMap="company">
+        SELECT
+            wx_company.recKey,companyId,companyName,contactPerson,contactAddress,contactWay,status,wx_company.locId,locName,wx_company.createUserId,
+            wx_company.createDate,wx_company.lastUpdateUserId,wx_company.lastUpDate
+        FROM  wx_company,ep_loc
+        WHERE wx_company.locId = ep_loc.locId AND
+               (ep_loc.orgId =  #{locId} OR ep_loc.locId =  #{locId}) AND
+              status =1
+    </select>
+
+    <select id="selectCompany" resultMap="CompanyResultMap">
+        SELECT
+        recKey,companyId,companyName,contactPerson,contactAddress,contactWay,status,locId,remark
+        FROM  wx_company
+    </select>
+
+    <select id="findCompany" resultMap="CompanyResultMap" parameterType="java.lang.String">
+        SELECT
+        recKey,companyId,companyName,contactPerson,contactAddress,contactWay,status,locId,remark
+        FROM  wx_company
+        WHERE companyId =  #{id}
+    </select>
+
+    <select id="checkCompany" resultMap="CompanyResultMap" parameterType="java.lang.String">
+        SELECT
+        recKey,companyId,companyName,contactPerson,contactAddress,contactWay,status,locId,remark
+        FROM  wx_company
+        WHERE companyName =  #{name}
+    </select>
+
+    <select id="getCompanyMaxNum" resultMap="CompanyResultMap">
+        SELECT IFNULL(max(companyId),0) AS companyId
+        FROM wx_company
+    </select>
+
+    <insert id="insertCompany" parameterType="com.sr.platform.server.company.bean.WxCompany">
+        insert into wx_company(companyId,companyName,contactPerson,contactAddress,contactWay,status,locId,remark,createUserId,lastupdateUserId)
+        values(#{companyId,jdbcType=VARCHAR},#{companyName,jdbcType=VARCHAR},#{contactPerson,jdbcType=VARCHAR},#{contactAddress,jdbcType=VARCHAR},#{contactWay,jdbcType=VARCHAR},
+        #{status,jdbcType=BIGINT},#{locId,jdbcType=VARCHAR},#{remark,jdbcType=VARCHAR},#{createUserId,jdbcType=VARCHAR},#{lastUpdateUserId,jdbcType=VARCHAR})
+    </insert>
+
+    <update id="updateCompany" parameterType="com.sr.platform.server.company.bean.WxCompany">
+        update wx_company
+        <set >
+            <if test="companyName != null" >
+                companyName = #{companyName,jdbcType=VARCHAR},
+            </if>
+            <if test="contactPerson != null" >
+                contactPerson = #{contactPerson,jdbcType=VARCHAR},
+            </if>
+            <if test="contactAddress != null" >
+                contactAddress = #{contactAddress,jdbcType=VARCHAR},
+            </if>
+            <if test="contactWay != null" >
+                contactWay = #{contactWay,jdbcType=VARCHAR},
+            </if>
+            <if test="locId != null" >
+                locId = #{locId,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null" >
+                status = #{status,jdbcType=INTEGER},
+            </if>
+            <if test="remark != null" >
+                remark = #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="lastUpDate != null" >
+                lastUpDate = #{lastUpDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="lastUpdateUserId != null" >
+                lastUpdateUserId = #{lastUpdateUserId,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where recKey = #{recKey,jdbcType=BIGINT}
+    </update>
+</mapper>

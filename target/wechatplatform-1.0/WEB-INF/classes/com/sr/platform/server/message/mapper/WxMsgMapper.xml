@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sr.platform.server.message.dao.IWxMsgDao">
+    <select id="findAllMessage" resultType="com.sr.platform.server.message.bean.WxMsgTemplet">
+        SELECT
+        recKey,
+        messageId,
+        messageTempletCode,
+        messageSubject,
+        messageDescription,
+        ref1,
+        ref2,
+        ref3,
+        remark,
+        DATE_FORMAT(createDate,'%Y-%m-%d %T') createDate,
+        createUserId,
+        DATE_FORMAT(updateDate,'%Y-%m-%d %T') updateDate,
+        updateUserId
+        FROM
+        wx_messagetemplet
+        ORDER BY
+        createDate DESC
+    </select>
+
+    <select id="getMaxNum" resultType="com.sr.platform.server.message.bean.WxMsgTemplet">
+        SELECT IFNULL(max(right(messageId, 4)),0) as messageId
+        FROM wx_messagetemplet
+    </select>
+
+    <select id="getMsgById" resultType="com.sr.platform.server.message.bean.WxMsgTemplet" parameterType="java.lang.String">
+        SELECT
+        recKey,
+        messageId,
+        messageTempletCode,
+        messageSubject,
+        messageDescription,
+        ref1,
+        ref2,
+        ref3,
+        remark,
+        DATE_FORMAT(createDate,'%Y-%m-%d %T') createDate,
+        createUserId,
+        DATE_FORMAT(updateDate,'%Y-%m-%d %T') updateDate,
+        updateUserId
+        FROM wx_messagetemplet
+        WHERE messageId =#{id}
+    </select>
+
+    <delete id="deleteMessage" parameterType="java.lang.String">
+        DELETE
+        FROM
+        wx_messagetemplet
+        WHERE recKey=#{recKey}
+    </delete>
+
+    <update id="updateMessage" parameterType="com.sr.platform.server.message.bean.WxMsgTemplet">
+        UPDATE
+          wx_messagetemplet
+        SET
+          messageSubject = #{messageSubject},
+          messageDescription = #{messageDescription},
+          remark = #{remark},
+          updateDate = NOW(),
+          updateUserId = #{updateUserId}
+        WHERE
+          recKey = #{recKey}
+    </update>
+
+    <update id="updateMessageStatus" parameterType="java.util.List">
+        UPDATE
+          wx_messagetemplet
+        SET
+          ref1=#{ref1}
+        WHERE
+          messageId= #{id}
+    </update>
+
+    <insert id="saveMessage" parameterType="com.sr.platform.server.message.bean.WxMsgTemplet">
+        INSERT
+        INTO
+        wx_messagetemplet(
+        messageId,
+        messageTempletCode,
+        messageSubject,
+        messageDescription,
+        ref1,
+        remark,
+        createDate,
+        createUserId,
+        updateDate,
+        updateUserId
+        )
+        VALUES(
+        #{messageId},
+         (select setString from ep_appsetting where setId='messageTempletCode'),
+        #{messageSubject},
+        #{messageDescription},
+        '0',
+        #{remark},
+        NOW(),
+        #{createUserId},
+        NOW(),
+        #{createUserId},
+        )
+    </insert>
+</mapper>

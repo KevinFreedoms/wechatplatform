@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sr.platform.server.memberManagement.dao.IWxConsumeDao">
+
+<select id="getWxConsumes" resultType="com.sr.platform.server.memberManagement.bean.WxConsume">
+    select
+    c.recKey,
+    m.memberId,
+    m.memberName,
+    m.code,
+    c.consumeId,
+    DATE_FORMAT(c.createDate,'%Y-%m-%d %T') createDate,
+    c.money,
+    c.actualMoney,
+    c.discountMoney,
+    c.beforeConsumeBalance,
+    c.afterConsumeBalance
+    from
+    wx_consume c
+    LEFT JOIN
+    wx_member m
+    on
+    c.openId=m.openId
+    <if test="startDate!=null and startDate!='9999'">
+        WHERE
+        c.createDate
+        BETWEEN
+        str_to_date(CONCAT(#{startDate},'00:00:00') ,'%Y-%m-%d %H:%i:%s')
+        AND
+        str_to_date(CONCAT(#{endDate},'23:59:59') ,'%Y-%m-%d %H:%i:%s')
+    </if>
+    ORDER BY c.recKey
+
+</select>
+
+</mapper>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sr.platform.server.memberManagement.dao.IWxRechargeDao">
+
+<select id="getWxRecharges" resultType="com.sr.platform.server.memberManagement.bean.WxRecharge">
+    select
+    r.recKey,
+    m.memberId,
+    m.memberName,
+    m.code,
+    r.rechargeId,
+    DATE_FORMAT(r.createDate,'%Y-%m-%d %T') createDate,
+    r.money,
+    r.actualMoney,
+    r.presentMoney,
+    beforeRechargeBalance,
+    afterRechargeBalance,
+    m.rate
+    from wx_member m right join wx_recharge r on
+    m.openId=r.openId
+    <if test="startDate!=null and startDate!='9999'">
+        WHERE
+        r.createDate
+        BETWEEN
+        str_to_date(CONCAT(#{startDate},'00:00:00') ,'%Y-%m-%d %H:%i:%s')
+        AND
+        str_to_date(CONCAT(#{endDate},'23:59:59') ,'%Y-%m-%d %H:%i:%s')
+    </if>
+    ORDER BY r.recKey
+
+</select>
+
+</mapper>

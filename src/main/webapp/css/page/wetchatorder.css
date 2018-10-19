@@ -1,0 +1,64 @@
+@charset "utf-8";
+/* CSS Document */
+/******************************************微信订单*********************************/
+.wetchatData{
+	position:relative;
+}
+.wetchatData i{
+	position:absolute;
+	top:8px;
+	color:#ADADAD;
+	left:275px;
+}
+.filterarea{
+	margin-bottom:20px;
+}
+.filterarea label{
+	float:left;
+}
+.filterarea select{
+	float:left;
+	margin-right:30px;
+}
+.wetchatData .datainput{
+	width:260px;
+}
+.exportexcel{
+	float:right;
+	margin-top:10px;
+	margin-left:10px;
+}
+.module{
+	border-bottom:1px solid #E8E8E8;
+	padding:15px 0px;
+}
+.module:last-child{
+	border-bottom:0px;
+}
+.module h4{
+	color: #666666;
+	font-size:14px;
+	font-weight:bold;
+	margin:0px;
+	font-family:"微软雅黑";
+}
+.module ul li{
+	float:left;
+	padding-top:8px;
+	width:50%;
+	text-align:left;
+	color:#9C9C9C;
+}
+.module .bootstrap-table{
+	margin-top:8px;
+}
+#productInfo thead,#payInfo thead{
+	background-color:#E8E8E8 ;
+}
+#orderDetail .modal-body{
+	padding-top:0px;
+}
+#wetchatOrdertb tr:hover{
+	cursor:pointer;
+}
+

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sr.platform.server.activity.dao.IWxMemcardActivityDao">
+    <select id="findMemcardActivity" resultType="com.sr.platform.server.activity.bean.WxMemcardActivity">
+        SELECT
+            recKey,
+            privilegeBatch,
+            couponBatch,
+            couponCount,
+            remark,
+            createUser,
+            DATE_FORMAT(createDate,'%Y-%m-%d') createDate,
+            DATE_FORMAT(lastUpdateDate,'%Y-%m-%d') lastUpdateDate,
+            lastUpdateUser
+      FROM
+	        WX_memcardactivity
+    </select>
+
+    <select id="findMemcardActivityById" resultType="com.sr.platform.server.activity.bean.WxMemcardActivity" parameterType="java.lang.String">
+        SELECT
+            recKey,
+            privilegeBatch,
+            couponBatch,
+            couponCount,
+            remark,
+            createUser,
+            DATE_FORMAT(createDate,'%Y-%m-%d') createDate,
+            DATE_FORMAT(lastUpdateDate,'%Y-%m-%d') lastUpdateDate,
+            lastUpdateUser
+        FROM
+            WX_memcardactivity
+        WHERE
+           privilegeBatch=#{id}
+    </select>
+
+    <update id="updateMemcardActivity">
+        UPDATE
+        wx_memcardactivity
+        SET
+        isCoupon=#{isCoupon},
+        couponBatch=#{couponBatch},
+        couponCount=#{couponCount},
+        remark=#{remark},
+        lastUpdateDate=now(),
+        lastUpdateUser = #{lastUpdateUser}
+        WHERE privilegeBatch=#{privilegeBatch}
+    </update>
+</mapper>

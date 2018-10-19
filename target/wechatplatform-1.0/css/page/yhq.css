@@ -1,0 +1,235 @@
+@charset "utf-8";
+/* CSS Document */
+/*********************************************优惠券发行纪录、新增优惠券、修改优惠券*************************************/
+.filter .filtertitle{
+	float:left;
+	margin-top:5px;
+	color:#999999;
+	margin-right:8px;
+}
+.couponfilter{
+	float:left;
+	margin-right:30px;
+	margin-bottom:20px;
+}
+.couponfilter input{
+	width:298px;
+}
+.couponfilter .btn-default{
+	height:29px;
+	border-radius:2px;
+	width:76px;
+	padding:0px;
+	margin-bottom:3px;
+	color:#666666;
+	margin-left:11px;
+}
+.lookdetail{
+	border-right:0px;
+}
+.coupontab{
+	margin-top:-10px;
+}
+<!--新增优惠券-->
+.dataradius .radiobeuty,.period .radiobeuty{
+	margin-right:0px;
+} 
+.addcouponpage{
+	padding:15px;
+}
+.addcouponpage img{
+	width:17px;
+	height:17px;
+	margin-left:30px;
+	margin-right:5px;
+}
+.addcouponpage .rightcont{
+	color:#666666;
+}
+.addcouponpage .toolipinfo{
+	color: #999999;
+}
+.useDataradiu i,.stratData i{
+	position:absolute;
+	left:245px;
+	top:8px;
+	color:#ADADAD;
+}
+.dataradius{
+	position:relative;
+	float:left;
+	margin-right:15px;
+}
+.dataradius i{
+	position:absolute;
+	top:8px;
+	color:#ADADAD;
+	right:16px;
+}
+.tagsinput{
+	border:0px;
+	padding:0px;
+	margin-bottom:15px;
+	max-height:160px;
+	overflow-y:scroll;
+}
+.tagsinput .tag{
+	background-color:#bee1fa;
+	color: #2778b3;
+    border-radius: 21px;
+	padding: 3px 15px;
+}
+.tagsinput .tag:hover {
+    background-color:#bee1fa;
+    color: #2778b3;
+    padding: 3px 20px 3px 12px;
+}
+.tagsinput-remove-link {
+    bottom: 0;
+    color:#2778b3;
+    cursor: pointer;
+    font-size: 12px;
+    opacity:0;
+    padding: 7px 7px 5px 0;
+    position: absolute;
+    right: 0;
+    text-align: right;
+    text-decoration: none;
+    top:-4px;
+    width: 100%;
+    z-index: 2;
+    display: none\9;
+}
+.tagsinput-remove-link:before{
+	 color:#2778b3;
+}
+.tagsinput-add-container{
+	display:none;
+}
+/*#dishradius .fixed-table-container,#storeradius .fixed-table-container{
+	border:0px;
+	max-height:350px;
+	overflow-y:scroll;
+}*/
+#dishradius .modal-body,#storeradius .fixed-table-container{
+	padding-bottom:0px;
+	padding-top:0px;
+}
+#dishradius .modal-footer,#storeradius .modal-footer{
+	margin-top:0px;
+}
+.rightcont .suitstore{
+	border:1px solid #dbdbdb;
+	border-radius: 2px;
+	width:50%;
+	margin-top:10px;
+	padding:5px;
+	position:relative;
+}
+.suitstore .chosenum{
+	position:absolute;
+	bottom:0px;
+	right:5px;
+	color:#c4c4c4;
+}
+.storelist{
+	margin-bottom:0px;
+	padding-left:0px;
+}
+.storelist li{
+	float:left;
+	padding:3px 10px;
+	background-color:#bee1fa;
+	color: #2778b3;
+	border-radius: 21px;
+	margin:0px 10px 10px 0px;
+}
+.storelist .removestore{
+	font-size:12px;
+}
+.ke-container{
+	width:100%!important;
+}
+#storeradius .modal-body{
+	padding:0px 20px
+}
+.alerdychose{
+	float:left;
+	margin-top:5px;
+}
+.lookradius:hover{
+	cursor:pointer;
+}
+.yhquseradius label{
+	font-weight:bold;
+	color:rgb(153, 153, 153);
+	margin:6px 0px;
+}
+<!--查看领用记录-->
+.neckband{
+	padding:0px 10px;
+}
+.neckbandTltle,.neckbandbody{
+	border:1px solid #e8e8e8;
+	border-radius:2px;
+	margin-bottom:10px;
+}
+#neckband .modal-body h4{
+	padding:10px;
+	border-bottom:1px solid #E8E8E8;
+	font-size:14px;
+	color:#666666;
+	margin-top:0px;
+	margin-bottom:0px;
+	font-family:"微软雅黑"
+}
+#neckband thead{
+	background-color:#e8e8e8;
+}
+.yhqInfo{
+	padding:5px 0px;
+	color:#9c9c9c;
+}
+.yhqInfo label{
+	margin-bottom:0px;
+	font-family:"微软雅黑";
+	margin-left:15px;
+	color:#666666;
+}
+.neckband label{
+	float:left;
+}
+.neckband .neckbandlist{
+	width:285px;
+	padding-left: 0px;
+    margin-bottom: 0px;
+    border: 1px solid #DDDFE0;
+    border-radius: 2px;
+}
+.fiflterType{
+	float:left;
+	margin-top:10px;
+}
+.fiflterstatus{
+	float:left;
+	margin-top:10px;
+}
+.fiflterstatus .yhqstatu{
+	margin-left:10px;
+	margin-top:5px;
+}
+.surebtn{
+	padding:15px 15px 25px 45px;
+}
+.surebtn .btn-primary{
+	color:#fff;
+	width:100px;
+	margin-right:15px;
+}
+.surebtn .btn-default{
+	background-color:#F7F7F7;
+	border:1px solid #D9D9D9;
+	color:#999999;
+	width:100px;
+}
+

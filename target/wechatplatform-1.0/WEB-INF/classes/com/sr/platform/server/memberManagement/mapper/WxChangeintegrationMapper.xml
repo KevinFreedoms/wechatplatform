@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sr.platform.server.memberManagement.dao.IWxChangeintegrationDao">
+
+<select id="getWxChangeintegrations" resultType="com.sr.platform.server.memberManagement.bean.WxChangeintegration">
+    SELECT
+    c.recKey,
+    c.memberId,
+    c.memberName,
+    m.code,
+    c.source,
+    DATE_FORMAT(c.sourceDate,'%Y-%m-%d %T') sourceDate,
+    c.changeIntegration,
+    c.nowIntegration
+    FROM
+    wx_changeintegration c
+    LEFT JOIN
+    wx_member m
+    on
+    c.openId=m.openId
+    <if test="startDate!=null and startDate!='9999'">
+        WHERE
+        c.sourceDate
+        BETWEEN
+        str_to_date(CONCAT(#{startDate},'00:00:00') ,'%Y-%m-%d %H:%i:%s')
+        AND
+        str_to_date(CONCAT(#{endDate},'23:59:59') ,'%Y-%m-%d %H:%i:%s')
+    </if>
+    ORDER BY c.recKey
+
+</select>
+    <select id="getFreeDay" resultType="com.sr.platform.server.memberManagement.bean.WxChangeintegration">
+  SELECT
+        wx_changeintegration.memberId,
+        wx_changeintegration.memberName,
+        code,
+        sourcebooking,
+        source,
+        DATE_FORMAT(sourceDate,'%Y-%m-%d %T') sourceDate,
+        beforeIntegration,
+        changeIntegration,
+        nowIntegration
+FROM
+        wx_changeintegration,wx_bookingdetails,wx_member
+WHERE
+        source='兑换'
+        AND wx_bookingdetails.bookingId = wx_changeintegration.sourceBooking
+        AND wx_member.openId = wx_changeintegration.openId
+        <if test="startDate!=null and startDate!='9999'">
+            AND
+            sourceDate
+            BETWEEN
+            str_to_date(CONCAT(#{startDate},'00:00:00') ,'%Y-%m-%d %H:%i:%s')
+            AND
+            str_to_date(CONCAT(#{endDate},'23:59:59') ,'%Y-%m-%d %H:%i:%s')
+        </if>
+
+
+
+
+ORDER BY sourceDate
+   </select>
+</mapper>

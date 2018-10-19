@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sr.platform.server.suitstore.dao.ISuitStoreDao">
+    <select id="getLocAll" resultType="com.sr.platform.server.suitstore.bean.WxLoc">
+        SELECT recKey,sid,poi_id,business_name,branch_name,province,city,district,address,telephone,categories,
+                offset_type,longitude,latitude,recommend,special,introduction,open_time,avg_price,url
+        FROM wx_loc
+    </select>
+
+    <select id="getLocById" resultType="com.sr.platform.server.suitstore.bean.WxLoc" parameterType="java.lang.String">
+        SELECT recKey,sid,poi_id,business_name,branch_name,province,city,district,address,telephone,categories,
+                offset_type,longitude,latitude,recommend,special,introduction,open_time,avg_price,url
+        FROM  wx_loc
+        WHERE sid=#{id}
+    </select>
+
+    <select id="getCateIndex" resultType="com.sr.platform.server.suitstore.bean.WxBasicCategories">
+        SELECT  category2
+        FROM wx_basiccategories
+        group by category2
+    </select>
+
+    <select id="getCateList" resultType="com.sr.platform.server.suitstore.bean.WxBasicCategories" parameterType="java.lang.String">
+        SELECT  recKey,category2,category3
+        FROM wx_basiccategories
+        WHERE category2=#{id}
+    </select>
+
+    <insert id="insertLoc" parameterType="com.sr.platform.server.suitstore.bean.WxLoc">
+         INSERT INTO wx_loc(sid,poi_id ,business_name,branch_name,province,city,district,address,telephone,categories,offset_type,longitude,latitude,recommend,special,introduction,open_time,avg_price,url)
+         SELECT
+              locId,
+              '',
+              '嘉旺餐厅',
+              locName,
+              address1,
+              address2,
+              address3,
+              address4,
+              #{telephone},
+              #{categories},
+              3,
+              longitude,
+              latitude,
+              #{recommend},
+              #{special},
+              #{introduction},
+              #{open_time},
+              #{avg_price},
+              #{url}
+        FROM ep_loc
+        WHERE locId = #{sid}
+    </insert>
+
+    <update id="updateLoc" parameterType="com.sr.platform.server.suitstore.bean.WxLoc">
+        UPDATE
+            wx_loc
+        SET
+            telephone= #{telephone},
+            categories= #{categories},
+            recommend= #{recommend},
+            special= #{special},
+            introduction= #{introduction},
+            open_time= #{open_time},
+            avg_price= #{avg_price}
+        WHERE
+          recKey=#{recKey}
+    </update>
+
+    <update id="updateLocPoi" parameterType="com.sr.platform.server.suitstore.bean.WxLoc">
+        UPDATE
+          wx_loc
+        SET
+          poi_id= #{poi_id}
+        WHERE
+          recKey=#{recKey}
+    </update>
+
+    <delete id="deleteLoc" parameterType="java.lang.String">
+        DELETE
+        FROM
+        wx_loc
+        WHERE sid=#{id}
+    </delete>
+</mapper>

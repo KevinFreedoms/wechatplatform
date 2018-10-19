@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sr.platform.server.company.dao.IWxCompanyStaffDao">
+    <resultMap id="CompanyStaffResultMap" type="com.sr.platform.server.company.bean.WxCompanyStaff">
+        <result column="recKey" property="recKey"/>
+        <result column="companyId" property="companyId"/>
+        <result column="companyName" property="companyName"/>
+        <result column="staffName" property="staffName"/>
+        <result column="openId" property="openId"/>
+        <result column="memberId" property="memberId"/>
+        <result column="memberName" property="memberName"/>
+        <result column="ref1" property="ref1"/>
+        <result column="ref2" property="ref2"/>
+        <result column="createUserId" property="createUserId"/>
+        <result column="createDate" property="createDate"/>
+        <result column="lastUpdateUserId" property="lastUpdateUserId"/>
+        <result column="lastUpDate" property="lastUpDate"/>
+    </resultMap>
+    <parameterMap id="companystaff" type="com.sr.platform.server.company.bean.WxCompanyStaff"/>
+    <select id="findCompanyStaffAll" resultMap="CompanyStaffResultMap" parameterMap="companystaff">
+        SELECT
+        recKey,companyId,companyName,staffName,openId,memberId,memberName,ref1,ref2,createUserId,
+        createDate,lastUpdateUserId,lastUpDate
+        FROM  wx_companystaff
+        WHERE 1=1
+        <if test="companyId != null ">
+            AND  companyId = #{companyId}
+        </if>
+    </select>
+    <select id="findCompanyStaff" resultMap="CompanyStaffResultMap" parameterType="java.lang.String">
+        SELECT
+        recKey,companyId,companyName,staffName,openId,memberId,memberName,ref1,ref2,createUserId,
+        createDate,lastUpdateUserId,lastUpDate
+        FROM  wx_companystaff
+        WHERE ref2 = #{id}
+    </select>
+
+    <insert id="insertCompanyStaff" parameterType="com.sr.platform.server.company.bean.WxCompanyStaff">
+        insert into wx_companystaff(companyId,companyName,staffName,openId,memberId,memberName,ref1,ref2,remark,createUserId,lastupdateUserId)
+        values(#{companyId,jdbcType=VARCHAR},#{companyName,jdbcType=VARCHAR},#{staffName,jdbcType=VARCHAR},#{openId,jdbcType=VARCHAR},#{memberId,jdbcType=VARCHAR},
+        #{memberName,jdbcType=VARCHAR},#{ref1,jdbcType=VARCHAR},#{ref2,jdbcType=VARCHAR},#{remark,jdbcType=VARCHAR},#{createUserId,jdbcType=VARCHAR},#{lastUpdateUserId,jdbcType=VARCHAR})
+    </insert>
+
+    <update id="updateCompanyStaff" parameterType="com.sr.platform.server.company.bean.WxCompanyStaff">
+        update wx_companystaff
+        <set >
+            <if test="ref1 != null" >
+                ref1 = #{ref1,jdbcType=VARCHAR},
+            </if>
+            <if test="staffName != null" >
+                staffName = #{staffName,jdbcType=VARCHAR},
+            </if>
+            <if test="remark != null" >
+                remark = #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="lastUpDate != null" >
+                lastUpDate = #{lastUpDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="lastUpdateUserId != null" >
+                lastUpdateUserId = #{lastUpdateUserId,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where recKey = #{recKey,jdbcType=BIGINT}
+    </update>
+
+    <!--删除员工-->
+    <delete id="deleteCompanyStaff" parameterType="java.lang.Integer" >
+        DELETE
+        FROM
+        wx_companystaff
+        where recKey =  #{id}
+    </delete>
+</mapper>

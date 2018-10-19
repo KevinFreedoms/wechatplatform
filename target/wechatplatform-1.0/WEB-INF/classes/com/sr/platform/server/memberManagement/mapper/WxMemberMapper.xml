@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sr.platform.server.memberManagement.dao.IWxMemberDao">
+
+<select id="getWxMembers" resultType="com.sr.platform.server.memberManagement.bean.WxMember">
+    SELECT
+        recKey,
+        memberId,
+        memberName,
+        phone,
+        sex,
+        birthday,
+        DATE_FORMAT(registrationDate,'%Y-%m-%d %T') registrationDate,
+        currentIntegration,
+        balance,
+        cumulative
+    FROM
+       wx_member
+    <if test="startDate!=null and startDate!='9999'">
+        WHERE
+        registrationDate
+        BETWEEN
+        str_to_date(CONCAT(#{startDate},'00:00:00') ,'%Y-%m-%d %H:%i:%s')
+        AND
+        str_to_date(CONCAT(#{endDate},'23:59:59') ,'%Y-%m-%d %H:%i:%s')
+    </if>
+    ORDER BY recKey
+</select>
+<select id="getWxMembersFy" resultType="com.sr.platform.server.memberManagement.bean.WxMember">
+    SELECT
+        recKey,
+        memberId,
+        memberName,
+        phone,
+        sex,
+        birthday,
+        DATE_FORMAT(registrationDate,'%Y-%m-%d %T') registrationDate,
+        currentIntegration,
+        balance,
+        cumulative
+    FROM
+       wx_member
+    <where>
+        <if test="startDate!=null and startDate!='9999'">
+            registrationDate
+            BETWEEN
+            str_to_date(CONCAT(#{startDate},'00:00:00') ,'%Y-%m-%d %H:%i:%s')
+            AND
+            str_to_date(CONCAT(#{endDate},'23:59:59') ,'%Y-%m-%d %H:%i:%s')
+        </if>
+        <if test="search!=null and search!=''">
+            AND
+            CONCAT( memberId,
+            memberName,
+            phone,
+            sex,
+            birthday,
+            registrationDate,
+            currentIntegration,
+            balance,
+            cumulative)
+            LIKE
+            CONCAT('%',#{search},'%')
+        </if>
+    </where>
+    ORDER BY recKey
+    LIMIT #{start},#{pageSize}
+</select>
+<select id="reCount" resultType="Integer">
+    select count(0) from wx_member
+        <where>
+            <if test="startDate!=null and startDate!='9999'">
+                registrationDate
+                BETWEEN
+                str_to_date(CONCAT(#{startDate},'00:00:00') ,'%Y-%m-%d %H:%i:%s')
+                AND
+                str_to_date(CONCAT(#{endDate},'23:59:59') ,'%Y-%m-%d %H:%i:%s')
+            </if>
+            <if test="search!=null and search!=''">
+                AND
+                CONCAT( memberId,
+                memberName,
+                phone,
+                sex,
+                birthday,
+                registrationDate,
+                currentIntegration,
+                balance,
+                cumulative)
+                LIKE
+                CONCAT('%',#{search},'%')
+            </if>
+      </where>
+</select>
+
+</mapper>

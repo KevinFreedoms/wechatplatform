@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sr.platform.server.integration.dao.IWxCommodityCategoryDao">
+    <resultMap id="WxCommodityCategoryMap" type="com.sr.platform.server.integration.bean.WxCommodityCategory">
+        <result column="reckey" property="reckey"/>
+        <result column="categoryId" property="categoryId"/>
+        <result column="categoryName" property="categoryName"/>
+        <result column="categoryId" property="categoryId"/>
+        <result column="categoryType" property="categoryType"/>
+        <result column="flag" property="flag"/>
+        <result column="isUsing" property="isUsing"/>
+        <result column="showIndex" property="showIndex"/>
+        <result column="remark" property="remark"/>
+        <result column="createUser" property="createUser"/>
+        <result column="createDate" property="createDate"/>
+        <result column="lastUpdateUser" property="lastUpdateUser"/>
+        <result column="lastUpdateDate" property="lastUpdateDate"/>
+    </resultMap>
+    <select id="queryGiftCategory" resultMap="WxCommodityCategoryMap">
+        SELECT categoryId,categoryName,isUsing,'0'AS flag
+        FROM wx_commoditycategory
+    </select>
+
+    <select id="queryCategoryById" resultMap="WxCommodityCategoryMap" parameterType="java.lang.String">
+        SELECT categoryId,categoryName,isUsing
+        FROM wx_commoditycategory
+        WHERE categoryId= #{id}
+    </select>
+
+    <!--获取类别Id-->
+    <select id="getCategoryMaxNum" resultMap="WxCommodityCategoryMap">
+        SELECT IFNULL(max(categoryId),0) as categoryId
+        FROM wx_commoditycategory
+    </select>
+
+    <insert id="insertCategory" parameterType="com.sr.platform.server.integration.bean.WxCommodityCategory">
+        INSERT INTO  wx_commoditycategory (categoryId,categoryName,categoryType,isUsing,showIndex,ref1,ref2,ref3,remark,createUser,createDate,lastUpdateUser,lastUpdateDate)
+        VALUES(#{categoryId},#{categoryName},0,#{isUsing},0,'','','','',#{createUser},NOW(),#{createUser},NOW())
+    </insert>
+
+    <update id="updateCategory" parameterType="com.sr.platform.server.integration.bean.WxCommodityCategory">
+        UPDATE wx_commoditycategory
+        SET categoryName=#{categoryName},
+             isUsing=#{isUsing},
+             lastUpdateUser=#{createUser},
+             lastUpdateDate=NOW()
+        WHERE categoryId= #{categoryId}
+    </update>
+
+    <delete id="deleteCategory" parameterType="java.lang.String">
+        DELETE  FROM  wx_commoditycategory
+        WHERE categoryId=#{id}
+    </delete>
+
+    <update id="updateCommondityCategory" parameterType="com.sr.platform.server.integration.bean.WxCommodityCategory">
+        UPDATE wx_commodity
+        SET categoryName=#{categoryName},
+        lastUpdateUser=#{createUser},
+        lastUpdateDate=NOW()
+        WHERE categoryId= #{categoryId}
+    </update>
+</mapper>

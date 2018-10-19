@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sr.platform.server.coupon.dao.CouponDao">
+<!--优惠券汇总-->
+    <resultMap id="CouponCollectResultMap" type="com.sr.platform.server.coupon.bean.Wxcouponcollect">
+        <result column="reckey" property="reckey"/>
+        <result column="couponType" property="couponType"/>
+        <result column="couponBatch" property="couponBatch"/>
+        <result column="amount" property="amount"/>
+        <result column="quota" property="quota"/>
+        <result column="publishStartDate" property="publishStartDate"/>
+        <result column="publishEndDate" property="publishEndDate"/>
+        <result column="startDate" property="startDate"/>
+        <result column="endDate" property="endDate"/>
+        <result column="maxPublishQuantity" property="maxPublishQuantity"/>
+        <result column="publishedQuantity" property="publishedQuantity"/>
+        <result column="discount" property="discount"/>
+        <result column="section" property="section"/>
+        <result column="locAround" property="locAround"/>
+        <result column="productAround" property="productAround"/>
+        <result column="lssueType" property="lssueType"/>
+        <result column="receiveType" property="receiveType"/>
+        <result column="lowConSumption" property="lowConSumption"/>
+        <result column="exchangePoints" property="exchangePoints"/>
+        <result column="describeinfo" property="describeinfo"/>
+        <result column="remark" property="remark"/>
+        <result column="ref1" property="ref1"/>
+        <result column="ref2" property="ref2"/>
+        <result column="locStr" property="locStr"/>
+        <result column="productStr" property="productStr"/>
+    </resultMap>
+    <!--优惠券明细-->
+    <resultMap id="CouponDetailResultMap" type="com.sr.platform.server.coupon.bean.Wxcoupondetails">
+        <result column="reckey" property="reckey"/>
+        <result column="couponType" property="couponType"/>
+        <result column="couponBatch" property="couponBatch"/>
+        <result column="couponId" property="couponId"/>
+        <result column="status" property="status"/>
+        <result column="openId" property="openId"/>
+        <result column="memberId" property="memberId"/>
+        <result column="memberName" property="memberName"/>
+        <result column="memberName" property="memberName"/>
+        <result column="source" property="source"/>
+        <result column="sourceDate" property="sourceDate"/>
+        <result column="bookingId" property="bookingId"/>
+        <result column="useDate" property="useDate"/>
+        <result column="startDate" property="startDate"/>
+        <result column="endDate" property="endDate"/>
+        <result column="remark" property="remark"/>
+    </resultMap>
+
+    <parameterMap id="Collect" type="com.sr.platform.server.coupon.bean.Wxcouponcollect"/>
+
+    <sql id="Collect_Coupon_List">
+      reckey,couponType,couponBatch,amount,quota,publishStartDate,publishEndDate,startDate,endDate,maxPublishQuantity,
+      publishedQuantity,discount,section,locAround,productAround,lssueType,receiveType,lowConSumption,exchangePoints,
+      describeinfo,remark,ref1,ref2
+    </sql>
+
+    <!--查询优惠券汇总-->
+    <select id="findCollectById" parameterType="java.lang.String" resultMap="CouponCollectResultMap">
+        SELECT
+        <include refid="Collect_Coupon_List"/>,
+        (select GROUP_CONCAT(name) from ep_loc where  instr(locAround,locId))as locStr,
+        (select GROUP_CONCAT(productName) from ep_retailproduct where  instr(productAround,productId))as productStr
+        FROM wx_couponcollect
+        WHERE couponBatch=#{id}
+    </select>
+
+    <!--查询优惠券汇总-->
+    <select id="findCollectByquery" parameterType="map" resultMap="CouponCollectResultMap">
+        SELECT
+        <include refid="Collect_Coupon_List"/>,
+        (select GROUP_CONCAT(name) from ep_loc where  instr(locAround,locId))as locStr,
+        (select GROUP_CONCAT(productName) from ep_retailproduct where  instr(productAround,productId))as productStr
+        FROM wx_couponcollect
+        <where>
+              ''=''
+            <if test="couponType==0 ">
+                AND couponType =0
+            </if>
+            <if test="couponType!=null and couponType!=0 and couponType!=99">
+                AND couponType = #{couponType}
+            </if>
+            <if test="ref2!=''and ref2!=null and ref2!=99 and ref2!='99'">
+                AND ref2 = #{ref2}
+            </if>
+            <if test="receiveType!=''and receiveType!=null and receiveType!=99 and receiveType!='99'">
+                AND receiveType = #{receiveType}
+            </if>
+        </where>
+        ORDER BY createDate DESC
+    </select>
+    <!--查询优惠券汇总总数-->
+    <select id="findCollectByqueryCount" parameterType="map" resultType="map">
+        SELECT
+        count(*)AS number
+        FROM wx_couponcollect
+        <where>
+            ''=''
+            <if test="couponType==0 ">
+                AND couponType =0
+            </if>
+            <if test="couponType!=null and couponType!=0 and couponType!=99">
+                AND couponType = #{couponType}
+            </if>
+            <if test="ref2!=''and ref2!=null">
+                AND ref2 = #{ref2}
+            </if>
+            <if test="receiveType!=''and receiveType!=null">
+                AND receiveType = #{receiveType}
+            </if>
+        </where>
+    </select>
+
+    <sql id="Detail_Coupon_List">
+      reckey,couponType,couponBatch,couponId,status,openId,memberId,memberName,source,sourceDate,bookingId,useDate,startDate,endDate,remark
+    </sql>
+
+    <!--查询优惠券明细-->
+    <select id="findDetailByquery"  parameterType="map" resultMap="CouponDetailResultMap">
+        SELECT
+        <include refid="Detail_Coupon_List"/>
+        FROM wx_coupondetails
+        WHERE couponBatch = #{couponBatch}
+        <if test="status=='88'and status==88">
+            AND status != 99
+        </if>
+        <if test="status!='88'and status!=88">
+            AND status = #{status}
+        </if>
+        ORDER BY sourceDate DESC
+    </select>
+
+    <!--查询优惠券明细总数-->
+    <select id="findDetailByqueryCount"  parameterType="map" resultType="map">
+        SELECT
+        count(*)AS number
+        FROM wx_coupondetails
+        WHERE couponBatch = #{couponBatch}
+        <if test="status!=''and status!=null">
+            AND status = #{status}
+        </if>
+    </select>
+
+    <!--生成优惠券批次号-->
+    <select id="findCouponbtch"  parameterType="map" resultType="map">
+        select IFNULL(max(couponBatch),0) as couponbatch
+        from wx_couponcollect
+        where couponBatch like #{headtype}
+    </select>
+
+    <!--插入优惠券汇总-->
+    <insert id="insertWXcouponcollect" parameterType="map">
+        INSERT INTO  wx_couponcollect (couponType, couponBatch, amount, quota, publishStartDate,publishEndDate, startDate,
+                endDate,discount,maxPublishQuantity, publishedQuantity,section,locAround,productAround, ref1,
+                 ref2,ref3,describeinfo,remark,createUser,createDate,lastUpdateUser,lastUpdateDate,lssueType,receiveType,lowConSumption,exchangePoints)
+        VALUES(#{couponType},#{couponBatch},#{amount},#{quota},#{publishStartDate},#{publishEndDate},#{startDate},#{endDate},#{discount},
+               #{maxPublishQuantity},#{publishedQuantity},#{section},#{locAround},#{productAround},#{ref1},#{ref2},#{ref3},#{describeinfo},
+               #{remark},#{createUser},#{createDate},#{lastUpdateUser},#{lastUpdateDate},#{lssueType},#{receiveType},#{lowConSumption},#{exchangePoints});
+    </insert>
+
+    <!--更新优惠券-->
+    <update id="updateWXcouponcollect"  parameterType="map">
+        UPDATE wx_couponcollect
+        <trim prefix="set" suffixOverrides=",">
+            amount=#{amount},quota=#{quota},publishStartDate=#{publishStartDate},publishEndDate=#{publishEndDate},startDate=#{startDate},endDate=#{endDate},discount=#{discount},
+           section=#{section},locAround=#{locAround},productAround=#{productAround},ref1=#{ref1},ref2=#{ref2},ref3=#{ref3},describeinfo=#{describeinfo},
+            remark=#{remark},lastUpdateUser=#{lastUpdateUser},lastUpdateDate=#{lastUpdateDate},lssueType=#{lssueType},lowConSumption=#{lowConSumption},exchangePoints=#{exchangePoints}
+        </trim>
+        WHERE couponBatch=#{couponBatch}
+    </update>
+</mapper>

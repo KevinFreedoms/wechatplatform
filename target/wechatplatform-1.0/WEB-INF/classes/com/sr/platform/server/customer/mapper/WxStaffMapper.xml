@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sr.platform.server.customer.dao.IWxStaffDao">
+    <resultMap id="StaffResultMap" type="com.sr.platform.server.customer.bean.WxStaff">
+        <result column="recKey" property="recKey"/>
+        <result column="staffId" property="staffId"/>
+        <result column="staffName" property="staffName"/>
+        <result column="phone" property="phone"/>
+        <result column="address" property="address"/>
+        <result column="roleName" property="roleName"/>
+        <result column="locName" property="locName"/>
+        <result column="status" property="status"/>
+        <result column="password" property="password"/>
+        <result column="remark" property="remark"/>
+        <result column="createUserId" property="createUserId"/>
+        <result column="createDate" property="createDate"/>
+        <result column="lastUpdateUserId" property="lastUpdateUserId"/>
+        <result column="lastUpDate" property="lastUpDate"/>
+    </resultMap>
+
+    <resultMap id="SystemResultMap" type="com.sr.platform.server.customer.bean.WxSystem">
+        <result column="recKey" property="recKey"/>
+        <result column="userId" property="userId"/>
+        <result column="userName" property="userName"/>
+        <result column="password" property="password"/>
+    </resultMap>
+
+    <!--门店-->
+    <resultMap id="LocResultMap" type="com.sr.platform.server.customer.bean.EpLoc">
+        <result column="recKey" property="recKey"/>
+        <result column="locId" property="locId"/>
+        <result column="locName" property="locName"/>
+        <result column="orgId" property="orgId"/>
+        <result column="address1" property="address1"/>
+        <result column="address2" property="address2"/>
+        <result column="address3" property="address3"/>
+        <result column="address4" property="address4"/>
+        <result column="address4" property="address4"/>
+        <result column="latitude" property="latitude"/>
+        <result column="longitude" property="longitude"/>
+    </resultMap>
+    <parameterMap id="staff" type="com.sr.platform.server.customer.bean.WxStaff"/>
+
+    <select id="findSys" resultMap="SystemResultMap" parameterType="java.lang.String">
+        SELECT
+              recKey,userId,userName,password
+        FROM  wx_system
+        WHERE userId =  #{id}
+    </select>
+
+    <select id="findStaff" resultMap="StaffResultMap" parameterType="java.lang.String">
+        SELECT
+              recKey,staffId,staffName,phone,address,roleId,locId,status,password,remark
+        FROM  wx_staff
+        WHERE staffId =  #{id}
+    </select>
+
+    <select id="findStaffAll" resultMap="StaffResultMap" parameterMap="staff">
+        SELECT
+            wx_staff.recKey,staffId,staffName,wx_staff.phone,address,IFNULL(wx_role.roleName,"") AS roleName,IFNULL(ep_loc.locName,"") AS locName ,wx_staff.status,password,
+            wx_staff.createUserId,wx_staff.createDate,wx_staff.lastUpdateUserId,wx_staff.lastupDate
+        FROM  wx_role,wx_staff LEFT JOIN ep_loc ON ep_loc.locId=wx_staff.locId
+        WHERE wx_staff.roleId = wx_role.roleId
+    </select>
+
+    <insert id="insertStaff" parameterType="com.sr.platform.server.customer.bean.WxStaff">
+        insert into wx_staff(staffId,staffName,phone,address,roleId,locId,status,password,remark,createUserId,lastupdateUserId)
+         values( #{staffId,jdbcType=VARCHAR}, #{staffName,jdbcType=VARCHAR},#{phone,jdbcType=VARCHAR},#{address,jdbcType=VARCHAR},#{roleId,jdbcType=VARCHAR},
+         #{locId,jdbcType=VARCHAR},#{status,jdbcType=BIGINT},#{password,jdbcType=VARCHAR},#{remark,jdbcType=VARCHAR},#{createUserId,jdbcType=VARCHAR},#{lastUpdateUserId,jdbcType=VARCHAR})
+    </insert>
+
+    <update id="updateStaff" parameterType="com.sr.platform.server.customer.bean.WxStaff">
+        update wx_staff
+        <set >
+             <if test="staffName != null" >
+                 staffName = #{staffName,jdbcType=VARCHAR},
+            </if>
+            <if test="phone != null" >
+                phone = #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="address != null" >
+                address = #{address,jdbcType=VARCHAR},
+            </if>
+            <if test="roleId != null" >
+                roleId = #{roleId,jdbcType=VARCHAR},
+            </if>
+            <if test="locId != null" >
+                locId = #{locId,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null" >
+                password = #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null" >
+                status = #{status,jdbcType=INTEGER},
+            </if>
+            <if test="remark != null" >
+                remark = #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="lastUpDate != null" >
+                lastUpDate = #{lastUpDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="lastUpdateUserId != null" >
+                lastUpdateUserId = #{lastUpdateUserId,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where recKey = #{recKey,jdbcType=BIGINT}
+    </update>
+
+    <select id="getStaffMaxNum" resultMap="StaffResultMap">
+        SELECT IFNULL(max(staffId),0) AS staffId
+        FROM wx_staff
+        WHERE staffId!='9999';
+    </select>
+
+    <select id="getEploc" resultMap ="LocResultMap">
+         select @rowno:=@rowno + 1 AS recKey,
+                  locId,
+                  locName
+         from ep_loc,(SELECT @rowno:=0) b
+    </select>
+
+    <select id="getEplocById" resultMap ="LocResultMap" parameterType="java.lang.String">
+        select
+            locId,
+            locName,
+            orgId,
+            address1,
+            address2,
+            address3,
+            address4,
+            latitude,
+            longitude
+        from ep_loc
+        WHERE locId = #{id}
+    </select>
+
+    <select id="getEplocByLoc" resultMap ="LocResultMap" parameterType="java.lang.String">
+        select
+            locId,
+            locName,
+            orgId,
+            address1,
+            address2,
+            address3,
+            address4,
+            latitude,
+            longitude
+        from ep_loc
+        WHERE orgId =  #{id}
+    </select>
+</mapper>

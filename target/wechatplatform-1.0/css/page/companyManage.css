@@ -1,0 +1,444 @@
+@charset "utf-8";
+/* CSS Document */
+a:hover{
+	cursor:pointer;
+}
+.chosedata{
+	float:left;
+	position:relative;
+	margin-top:10px;
+	margin-right:15px;
+}
+.chosedata .datainput{
+	width:260px;
+}
+.chosedata i{
+	position:absolute;
+	left:275px;
+	top:8px;
+}
+.rechargeHead{
+	background-color:#fff;
+	padding:10px 45px;
+	line-height:1.8;
+}
+.rechargeHead p{
+	margin-bottom:15px;
+}
+.rechargeHead label{
+	width:53px;
+	text-align:right;
+}
+.rechargeHead .backpage{
+	text-align:right;
+	margin-bottom:10px;
+}
+.rechargeOrder{
+	color: #666666;
+	font-size:16px;
+	font-weight: bold;
+}
+.rechargeHead select,.rechargeHead input{
+	width:300px;
+}
+.importexcel{
+	float:right;
+	width:150px;
+}
+.importexcel i{
+	margin-right:15px;
+}
+.rechargecontent{
+	border: 1px solid #eeeeee;
+    margin:15px;
+}
+.rechargecontent .withoutquery{
+	text-align:center;
+	margin-top:15%;
+	font-size:16px;
+}
+.importToolip {
+	background-color: #fcfcfc;
+    border-color: #eeeeee;
+	padding:15px 30px;
+}
+.importToolip .seccessInfo{
+	background-color: #F6FFED;
+    border:1px solid #B7EB8F;
+	padding:10px 15px;
+	border-radius: 4px;
+}
+.importToolip .successNumber{
+	color:rgb(74, 166, 252);
+}
+.importToolip .errorNumber{
+	color:rgb(252, 76, 76);
+}
+.importToolip p{
+	color: #333333;
+	font-size:14px;
+	margin-bottom:0px;
+}
+.importToolip .closetoolip{
+	float:right;
+	color:#444444;
+}
+.importToolip img{
+	height:20px;
+	width:20px;
+	margin-right:15px;
+}
+.importToolip .importInfo{
+	color: #999999;
+	font-size:12px;
+	margin-left:35px;
+}
+.errorcontent{
+	background-color: #f7f7f7;
+    border:1px solid #e51c23;
+    box-shadow: 0 0 4px #e51c23;
+	padding:15px 30px;
+}
+#errortable thead{
+	background-color: #ffffff;
+}
+#errortable thead tr{
+	border-top:0px;
+}
+#errortable thead  tr  th{
+	border-bottom:0px;
+}
+#errortable>tbody>tr:nth-child(even)>td{
+	background-color: #ffffff;
+}
+#errortable input{
+	background-color: #ffffff;
+    border-color: #bababa;
+	color: #999999;
+	height:22px;
+	margin-right:0px;
+}
+.correctcontent{
+	padding:15px 30px;
+	background-color: #ffffff;
+	margin-top:10px;
+}
+.sureorder h4{
+	color: #666666;
+	font-weight:bold;
+	font-family: Roboto, BlinkMacSystemFont, "Helvetica Neue", Arial, "Microsoft Yahei", "WenQuanYi Micro Hei", "Pingfang SC", sans-serif;
+}
+.sureorder p{
+	margin-left:20px;
+}
+.sureorder{
+	border-top:3px double #bbbbbb;
+	padding-top:20px;
+	margin-top:20px;
+}
+.sureorder label{
+	margin-right:40px;
+}
+.importantMessage{
+	color: #333333;
+	font-weight: bold;
+	font-size:14px
+}
+.correctcontent .sureSave{
+	width:170px;
+	margin-top:20px;
+}
+.batchModify p{
+	float:left;
+	padding-right:20px;
+}
+.batchModify .closebatch{
+	margin-top:6px;
+	margin-bottom:0px;
+	font-size:16px;
+}
+.batchModify .closebatch a:hover{
+	cursor:pointer;
+}
+.batchModify .alerdychose{
+	margin-top:6px;
+	margin-bottom:0px;
+	border-right:1px solid #e0e0e0;
+	margin-right:20px
+}
+.batchModify{
+	padding-left:10px;
+	margin-top: 12px;
+}
+.batchModify a:hover{
+	cursor:pointer;
+}
+/*************************************************充值单详情****************************************/
+.rechargeHead .orderperson{
+	float:left;
+	width:250px;
+}
+.rechargeHead .rightInfo{
+	float:right;
+	text-align:right;
+	margin-top: 12px;
+	width:150px;
+}
+.orderperson{
+	color: #9c9c9c;
+}
+.orderperson .majorInfo{
+	color: #333333;
+	font-size: 20px;
+	font-weight:bold;
+}
+.orderperson .alerdyinvalid{
+	color:#c8d1d9;
+	font-size: 20px;
+	font-weight:bold;
+}
+.secondbtn{
+	color: #999999;
+	margin-left:15px;
+	font-size:14px;
+}
+.secondbtn i{
+	margin-right:5px;
+}
+.pull_right{
+	float:right;
+}
+.rechargeHead .recheck{
+	width:120px;
+}
+.rechargeDetail{
+	margin-bottom:10px;
+}
+.rechargeDetail .remark{
+	color: #9c9c9c;
+}
+.detailcontent .correctcontent{
+	margin-top:0px;
+}
+#sureCheck label{
+	width:85px;
+	float:left;
+}
+#sureCheck .reightText{
+	text-align:right;
+	margin-bottom:10px;
+	float:right;
+}
+#sureCheck .modal-dialog{
+	width:350px;
+}
+#sureCheck .modal-body{
+	background-color: #f7f7f7;
+	padding:15px 35px;
+}
+#sureCheck .modal-header {
+    border-bottom: 2px solid #e5e5e5;
+}
+#sureCheck .modal-header h4.modal-title{
+	color: #333333;
+	font-size:12px;
+	font-family: Roboto, BlinkMacSystemFont, "Helvetica Neue", Arial, "Microsoft Yahei", "WenQuanYi Micro Hei", "Pingfang SC", sans-serif;
+}
+#sureCheck .emphasize{
+	color: #333333;
+	font-weight:bold;
+	font-size:14px;
+	margin-right:7px;
+}
+#sureCheck input{
+	color: #333333;
+	font-weight:bold;
+	margin-right:0px;
+	font-size:14px;
+}
+#sureCheck .factrecivemoney{
+	width:150px;
+	margin-right:7px;
+}
+#sureCheck input[type="password"]{
+	width:170px;
+}
+.bootstrap-table input{
+	margin-right:0px;
+}
+.bootstrap-table .rechargeinput{
+	text-align:right;
+}
+#sureCheck .modal-content{
+	border-radius:0px;
+}
+.dialogbtn{
+	text-align:right;
+	margin-top:10px;
+}
+.dialogbtn .btn{
+	width:100px;
+}
+.dialogbtn .btn-default{
+	background-color:#fff;
+	color: #333333;
+}
+#sureCheck .reightText .errortoolip{
+	color:#e51c23;
+	font-size:10px;
+	text-align:left;
+	margin-top:5px;
+}
+#sureCheck .reightText .withoutpassword{
+	margin-top:5px;
+}
+#sureCheck .speclallab{
+	margin-top:6px;
+}
+.reightText a:hover{
+	cursor:pointer;
+}
+.rechargeDetail .btn{
+	width:120px;
+}
+*, .userinput:before, *:after{
+	box-sizing:border-box;;
+}
+/****************************************2018-07-10**********************************************/
+.oughtmoney{
+	color:#F00;
+	font-weight:bold;
+}
+#checkphone .modal-dialog{
+	width:350px;
+}
+#sureCheck .modal-header {
+	border-bottom: 2px solid #e5e5e5;
+}
+.pay-box{
+	margin:10px 0;
+	border: 1px solid #ddd;
+	border-radius: 5px;
+	background: #fff;
+	height:35px;
+}
+.pay-box input{
+	font-size: 1.4rem;
+	width: 60%;
+	text-indent: 10px;
+	padding:0px;
+	background: transparent; border: 0;
+	margin-right:0px;
+	height:35px;
+}
+.pay-box .pay-box-btn{
+	width: 40%;
+	float: right;
+	padding:0px;
+	color:#4AA6FC;
+	border-radius: 0px 5px 5px 0px;
+	height:35px;
+}
+.pay-box input[disabled]{
+	color:#ccc;
+}
+.majorInfo{
+	color: #333333;
+	font-size: 20px;
+	font-weight:bold;
+	margin:0px 20px;
+	float:right;
+	margin-top:-5px;
+}
+.alerdyinvalid{
+	color: #c8d1d9;
+	font-size: 20px;
+	font-weight:bold;
+	margin:0px 20px;
+	float:right;
+	margin-top:-5px;
+}
+.rechargeorderinfo{
+	margin-right:25px;
+}
+.message{
+	font-size:14px;
+	/*width:25%;*/
+	height:72px;
+}
+.message label{
+	margin-bottom:0px;
+}
+.rechargeHead label{
+	width:70px;
+	text-align:right;
+}
+. rechargemoney{
+	font-weight:bold;
+	color:#333333;
+}
+.oughtmoney{
+	font-weight:bold;
+	color:#F00;
+}
+.panel-default {
+	border:0px;
+}
+.panel-default>.panel-heading{
+	border:0px;
+	background-color:#fff;
+	padding:0px;
+	color:rgb(74, 166, 252);
+	margin-bottom:10px;
+}
+.panel-default>.panel-heading .panel-title{
+	font-family:"微软雅黑";
+	font-size:14px;
+}
+.panel-default>.panel-heading .panel-title i{
+	margin-left:5px;
+	font-size:16px;
+}
+.panel-group .panel-heading+.panel-collapse .panel-body{
+	border:0px;
+	padding:5px 15px;
+	font-size:14px;
+}
+.orderperson div:nth-child(1){
+	margin-bottom: 10px;
+}
+#accordion{
+	margin-bottom:5px;
+}
+.panel-collapse{
+	border:0px;
+}
+.message input{
+	width:220px;
+}
+.panel-group .panel{
+	box-shadow:none;
+}
+.ordermessage{
+	display: flex;
+	justify-content:space-between;
+	align-items:flex-end ;
+	padding-bottom:10px;
+}
+.btngroup{
+	width:50%;
+}
+.remark{
+	text-align:left;
+	margin-bottom:10px;
+	font-size:14px;
+	color:rgb(156, 156, 156);
+	margin-top:-5px;
+}
+.message .discountmoney{
+	width:126px;
+}
+.factgathermoney{
+	color:#F00;
+	font-weight:bold;
+}

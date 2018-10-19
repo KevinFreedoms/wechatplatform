@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sr.platform.server.activity.dao.IWxBirthdayDiscountDao">
+    <select id="findBirthdayDiscount" resultType="com.sr.platform.server.activity.bean.WxBirthdayDiscount">
+        SELECT
+        recKey,
+        activityType,
+        privilegeBatch,
+        multiple,
+        discountRate,
+        couponBatch,
+        remark,
+        activeContent,
+        couponCount,
+        DATE_FORMAT(birthdayStartDate,'%Y-%m-%d') birthdayStartDate,
+        DATE_FORMAT(birthdayEndDate,'%Y-%m-%d') birthdayEndDate,
+        ref1
+        FROM
+        wx_birthdaydiscount
+    </select>
+
+    <select id="getPrivilegeBatch" resultType="com.sr.platform.server.activity.bean.WxBirthdayDiscount">
+        SELECT
+        IFNULL(Max(privilegeBatch),0) privilegeBatch
+        FROM
+        wx_birthdaydiscount
+        WHERE
+        DATE_FORMAT(createDate, '%Y-%m-%d') = DATE_FORMAT(now(),'%Y-%m-%d')
+    </select>
+
+    <select id="getBirthdayDiscountById" resultType="com.sr.platform.server.activity.bean.WxBirthdayDiscount" parameterType="java.lang.String">
+        SELECT
+            recKey,
+            activityType,
+            privilegeBatch,
+            multiple,
+            discountRate,
+            couponBatch,
+            remark,
+            activeContent,
+            couponCount,
+            DATE_FORMAT(birthdayStartDate,'%Y-%m-%d') birthdayStartDate,
+            DATE_FORMAT(birthdayEndDate,'%Y-%m-%d') birthdayEndDate,
+            ref1
+        FROM
+            wx_birthdaydiscount
+        WHERE privilegeBatch=#{batch}
+    </select>
+
+    <select id="getBirthdayDiscountByReckey" resultType="com.sr.platform.server.activity.bean.WxBirthdayDiscount"  parameterType="java.lang.String">
+        SELECT
+            recKey,
+            activityType,
+            privilegeBatch,
+            multiple,
+            discountRate,
+            couponBatch,
+            remark,
+            activeContent,
+            couponCount,
+            DATE_FORMAT(birthdayStartDate,'%Y-%m-%d') birthdayStartDate,
+            DATE_FORMAT(birthdayEndDate,'%Y-%m-%d') birthdayEndDate,
+            ref1
+        FROM
+            wx_birthdaydiscount
+        WHERE recKey=#{id}
+    </select>
+
+
+    <update id="updateBirthdayDiscount" parameterType="com.sr.platform.server.activity.bean.WxBirthdayDiscount">
+        UPDATE
+        wx_birthdaydiscount
+        SET
+        activityType = #{activityType},
+        multiple=#{multiple},
+        discountRate=#{discountRate},
+        activeContent=#{activeContent},
+        birthdayStartDate=str_to_date(CONCAT(#{birthdayStartDate},'00:00:00') ,'%Y-%m-%d %H:%i:%s'),
+        birthdayEndDate=str_to_date(CONCAT(#{birthdayEndDate},'23:59:59') ,'%Y-%m-%d %H:%i:%s') ,
+        ref1=#{ref1},
+        remark=#{remark},
+        couponBatch=#{couponBatch},
+        couponCount=#{couponCount},
+        lastUpdateDate=now()
+        where
+        recKey=#{recKey}
+    </update>
+
+    <insert id="insertBirthdayDiscount" parameterType="com.sr.platform.server.activity.bean.WxBirthdayDiscount">
+        INSERT INTO wx_birthdaydiscount (
+        activityType,
+        privilegeBatch,
+        multiple,
+        discountRate,
+        activeContent,
+        birthdayStartDate,
+        birthdayEndDate,
+        ref1,
+        ref2,
+        ref3,
+        remark,
+        createUser,
+        createDate,
+        lastUpdateUser,
+        lastUpdateDate,
+        couponBatch,
+        couponCount
+        )
+        VALUES
+        (
+        #{activityType},
+        #{privilegeBatch},
+        #{multiple},
+        #{discountRate},
+        #{activeContent},
+        str_to_date(CONCAT(#{birthdayStartDate},'00:00:00'),'%Y-%m-%d %H:%i:%s'),
+        str_to_date(CONCAT(#{birthdayEndDate},'23:59:59'),'%Y-%m-%d %H:%i:%s'),
+        #{ref1},
+        '',
+        '',
+        #{remark},
+        '',
+        now(),
+        '',
+        now(),
+        #{couponBatch},
+        #{couponCount}
+        )
+    </insert>
+</mapper>

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sr.platform.server.product.dao.ProductDao">
+    <resultMap id="WxImageMangerMap" type="com.sr.platform.server.product.bean.WxImageManger">
+        <result column="recKey" property="recKey"/>
+        <result column="imageId" property="imageId"/>
+        <result column="imageName" property="imageName"/>
+        <result column="imageUrl" property="imageUrl"/>
+        <result column="imageBlob" property="imageBlob"/>
+        <result column="imageType" property="imageType"/>
+        <result column="imageToId" property="imageToId"/>
+        <result column="locId" property="locId"/>
+        <result column="showIndex" property="showIndex"/>
+        <result column="remark" property="remark"/>
+        <result column="createUser" property="createUser"/>
+        <result column="createDate" property="createDate"/>
+        <result column="lastUpdateUser" property="lastUpdateUser"/>
+        <result column="lastUpdateDate" property="lastUpdateDate"/>
+    </resultMap>
+    <select id="findImages" resultMap="WxImageMangerMap" parameterType="java.lang.String">
+        select
+            imageId,
+            imageName,
+            imageUrl,
+            imageBlob,
+            imageType,
+            imageToId
+        from
+            WX_imagemanger
+        where
+            imageToId=#{productId}
+    </select>
+
+    <insert id="insertImage"  parameterType="com.sr.platform.server.product.bean.WxImageManger">
+        INSERT INTO wx_imagemanger(
+        imageId,
+        imageName,
+        imageUrl,
+        imageBlob,
+        imageType,
+        imageToId,
+        showIndex,
+        ref1,
+        ref2,
+        ref3,
+        remark,
+        createUser,
+        createDate,
+        lastUpdateUser,
+        lastUpdateDate
+        )
+        VALUES(
+        #{imageId},
+        #{imageName},
+        #{imageUrl},
+        #{imageBlob},
+        #{imageType},
+        #{imageToId},
+        #{showIndex},
+        #{ref1},
+        #{ref2},
+        #{ref3},
+        #{remark},
+        #{createUser},
+        #{createDate},
+        #{lastUpdateUser},
+        #{lastUpdateDate}
+        )
+    </insert>
+</mapper>

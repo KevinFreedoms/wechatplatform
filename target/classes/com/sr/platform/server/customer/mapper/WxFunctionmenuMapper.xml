@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sr.platform.server.customer.dao.IWxFunctionmenuDao">
+    <resultMap id="FunctionesultMap" type="com.sr.platform.server.customer.bean.WxFunctionmenu">
+        <result column="functionId" property="functionId"/>
+        <result column="functionName" property="functionName"/>
+        <result column="functionLevel" property="functionLevel"/>
+        <result column="parentSign" property="parentSign"/>
+        <result column="parentFunctionId" property="parentFunctionId"/>
+        <result column="operation" property="operation"/>
+        <result column="icon" property="icon"/>
+        <result column="status" property="status"/>
+        <result column="ischeck" property="ischeck"/>
+        <result column="createUserId" property="createUserId"/>
+        <result column="createDate" property="createDate"/>
+        <result column="lastUpdateUserId" property="lastUpdateUserId"/>
+        <result column="lastUpDate" property="lastUpDate"/>
+    </resultMap>
+    <parameterMap id="function" type="com.sr.platform.server.customer.bean.WxFunctionmenu"/>
+    <select id="findFunctions" resultMap="FunctionesultMap">
+        SELECT
+          functionId,functionName,parentSign,parentFunctionId,operation,functionLevel,icon,status,ischeck,createUserId,createDate,lastUpdateUserId,lastUpDate
+        FROM  wx_functionmenu
+        WHERE status = 1
+    </select>
+    <select id="findFunctionsAll" resultMap="FunctionesultMap">
+        SELECT
+        functionId,functionName,parentSign,parentFunctionId,operation,functionLevel,icon,status,ischeck,createUserId,createDate,lastUpdateUserId,lastUpDate
+        FROM  wx_functionmenu
+    </select>
+</mapper>

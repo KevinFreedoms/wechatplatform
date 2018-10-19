@@ -1,0 +1,69 @@
+@charset "utf-8";
+/* CSS Document */
+/*************************************************员工管理********************************/
+.taboperate{
+	padding: 0px 10px;
+    border-right: 1px solid #4AA6FC;
+}
+.lastchid{
+	border-right:0px;
+}
+.bootstrap-table .disabledremove{
+	color:#ccc;
+}
+#functionList{
+	border:1px solid #CCC; 
+	padding:10px 0 5px 5px;
+	max-height:240px;
+	overflow-y:scroll;
+}
+.roleInfo{
+	text-align:left;
+	padding-left:0px;
+}
+.form-horizontal.tasi-form .form-group{
+	border-bottom:0px;
+    padding-bottom:0px; 
+    margin-bottom:0px;
+	float:left;
+	width:50%;
+}
+.form-horizontal .form-group{
+	margin:0px;
+}
+.rightarea{
+	float:left;
+	width:70%;
+}
+.ztree *{
+	font-size:12px;
+}
+.ztree li a{
+	color: #828282;
+}
+.ztree li a:hover{
+	text-decoration:none;
+}
+.rightarea select{
+	width:143px;
+}
+.btnlist{
+	width:inherit;
+	padding:0px;
+}
+.btnlist li{
+	padding:10px;
+}
+.btnlist i{
+	font-size:14px;
+	margin-right:5px;
+}
+.btnlist li:hover{
+	background-color: #e1edfc;
+    color: #6598e6;
+	cursor:pointer;
+}
+.companyselect{
+	margin-top:11px;
+	margin-right:15px;
+}

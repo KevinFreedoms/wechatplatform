@@ -1,0 +1,73 @@
+
+#addStore .defaultLabel{
+    width: 90px;
+}
+#addStore .storedata{
+    position: relative;
+}
+.addcouponpage .storedata i{
+    position: absolute;
+    right: 15px;
+    top:8px;
+}
+#addStore .bootstrap-select{
+    width: 143px;
+    margin-left: -5px;
+}
+#addStore .btn-default{
+    border-radius: 2px;
+    border: 1px solid #dbdbdb;
+    height: 27px;
+    color:#353535;
+}
+.storecont{
+    position: relative;
+}
+.storecont .functioncount{
+    position: absolute;
+    left: 220px;
+    top: 32px;
+}
+.storecont .functioncount span{
+    margin-right: 20px;
+    color: #353535;
+}
+.storecont .functioncount .count{
+    font-weight: bold;
+    color: #101010;
+    margin-right: 5px;
+}
+.storecont .functioncount .remark{
+    color: #f02449;
+    margin-left: 10px;
+}
+.deletebtn{
+    float: right;
+    margin-top: 10px;
+    margin-left:5px;
+}
+.form-inline .form-control{
+    height: 27px;
+    border-radius: 2px;
+    box-shadow:none;
+    padding: 0px 5px;
+    width: 143px;
+}
+.form-inline{
+    margin-right: 10px;
+}
+.rightcont  i{
+    position: absolute;
+    left: 125px;
+    top:8px;
+}
+.bootstrap-select:not([class*="span"]):not([class*="col-"]):not([class*="form-control"]){
+    width: 143px;
+}
+.bootstrap-select.btn-group .dropdown-menu{
+    width: 143px;
+}
+.bootstrap-select-searchbox input{
+    margin:0px;
+    width: 100%;
+}

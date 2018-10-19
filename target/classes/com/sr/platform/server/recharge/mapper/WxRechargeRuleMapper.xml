@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sr.platform.server.recharge.dao.IRechargeDao">
+    <resultMap id="RechargeRuleResultMap" type="com.sr.platform.server.recharge.bean.WxRechargeRule">
+        <result column="recKey" property="recKey"/>
+        <result column="money" property="money"/>
+        <result column="presentMoney" property="presentMoney"/>
+        <result column="actualMoney" property="actualMoney"/>
+        <result column="isShow" property="isShow"/>
+        <result column="isCoupon" property="isCoupon"/>
+        <result column="isMoney" property="isMoney"/>
+        <result column="ref1" property="ref1"/>
+        <result column="remark" property="remark"/>
+        <result column="couponCount" property="couponCount"/>
+        <result column="couponBatch" property="couponBatch"/>
+        <result column="createUser" property="createUser"/>
+        <result column="createDate" property="createDate"/>
+        <result column="lastUpdateUser" property="lastUpdateUser"/>
+        <result column="lastUpdateDate" property="lastUpdateDate"/>
+    </resultMap>
+
+    <select id="getRuleAll" resultMap="RechargeRuleResultMap">
+        SELECT
+            recKey,
+            money,
+            presentMoney,
+            actualMoney,
+            isShow,
+            isCoupon,
+            isMoney,
+            CASE WHEN isCoupon IN (1)THEN '赠送优惠券'
+            ELSE'赠送金额' END ref1,
+            couponCount,
+            couponBatch
+        FROM  wx_rechargerule
+    </select>
+
+    <insert id="insertRechargeRule" parameterType="com.sr.platform.server.recharge.bean.WxRechargeRule">
+        insert into wx_rechargerule(money,presentMoney,actualMoney,isShow,isCoupon,isMoney,couponCount,couponBatch,remark,createUser,createDate,lastUpdateUser,lastUpdateDate)
+        values( #{money},#{presentMoney},#{actualMoney},#{isShow},#{isCoupon},#{isMoney},#{couponCount},#{couponBatch},#{remark},#{createUser,jdbcType=VARCHAR},now(),#{lastUpdateUser,jdbcType=VARCHAR},now())
+    </insert>
+
+    <update id="updateRechargeRule" parameterType="com.sr.platform.server.recharge.bean.WxRechargeRule">
+        UPDATE wx_rechargerule
+        SET
+            <if test="money != null" >
+                money = #{money},
+            </if>
+            <if test="presentMoney != null" >
+                presentMoney = #{presentMoney},
+            </if>
+            <if test="actualMoney != null" >
+                actualMoney = #{actualMoney},
+            </if>
+            <if test="isShow != null" >
+                isShow = #{isShow},
+            </if>
+            <if test="isCoupon != null" >
+                isCoupon = #{isCoupon},
+            </if>
+            <if test="isMoney != null" >
+                isMoney = #{isMoney},
+            </if>
+            <if test="couponCount != null" >
+                couponCount = #{couponCount},
+            </if>
+            <if test="couponBatch != null" >
+                couponBatch = #{couponBatch},
+            </if>
+            <if test="remark != null" >
+                remark = #{remark},
+            </if>
+                lastUpdateDate=now(),
+                lastUpdateUser= #{lastUpdateUser}
+          WHERE  recKey=#{recKey}
+    </update>
+
+    <delete id="deleteRuleById" parameterType="java.lang.String">
+        DELETE
+        FROM wx_rechargerule
+        WHERE  recKey=#{recKey}
+    </delete>
+
+    <select id="getRuleById" resultMap="RechargeRuleResultMap" parameterType="java.lang.String">
+        SELECT
+            recKey,
+            money,
+            presentMoney,
+            actualMoney,
+            isShow,
+            isCoupon,
+            isMoney,
+            couponCount,
+            couponBatch,
+            remark
+        FROM  wx_rechargerule
+        WHERE recKey=#{id}
+    </select>
+
+    <select id="getRuleByMoney" resultMap="RechargeRuleResultMap" parameterType="java.lang.Double">
+        SELECT
+        recKey,
+        money,
+        presentMoney,
+        actualMoney,
+        isShow,
+        isCoupon,
+        isMoney,
+        couponCount,
+        couponBatch,
+        remark
+        FROM  wx_rechargerule
+        WHERE money=#{money}
+    </select>
+</mapper>

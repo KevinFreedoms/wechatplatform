@@ -1,0 +1,202 @@
+.giftType{
+    margin: 0px 40px 0px 10px;
+}
+.taboperate {
+    padding: 0px 10px;
+    border-right: 1px solid #4AA6FC;
+}
+.taboperate:last-child{
+    border-right: 0px;
+}
+#typemanage .addcoupon{
+    margin-bottom: 10px;
+}
+.typekind{
+    margin-top:15px;
+    float: left;
+}
+select{
+    width: 143px;
+}
+.managetype{
+    margin-left: 20px;
+}
+.rightcont .remark{
+    width: 460px;
+    height: 108px;
+}
+.addgiftpro h4{
+    margin-left:15px;
+    margin-bottom: 20px;
+    font-size: 14.0px;
+    font-weight: bold;
+    padding-bottom: 10px;
+    font-family: Roboto, BlinkMacSystemFont, "Helvetica Neue", Arial, "Microsoft Yahei", "WenQuanYi Micro Hei", "Pingfang SC", sans-serif;
+    border-bottom: 1px solid #e6e6e6;
+}
+.media_cover {
+    width: 120px;
+    float: left;
+    margin-bottom: 25px;
+    margin-right: 15px;
+    position: relative;
+}
+.create_access {
+    display: block;
+    border: 1px dashed #d9dadc;
+    border-radius: 2px;
+    text-align: center;
+    width: 120px;
+    height: 120px;
+    margin-right: 10px;
+    position: relative;
+}
+.create_access .add_gray_wrp {
+    cursor: pointer;
+    color: #8d8d8d;
+    font-size: 14px;
+    position: absolute;
+    top: 50%;
+    margin-top: -40px;
+    bottom: 0px;
+    width: 100%;
+}
+.add_gray_wrp img {
+    width: 50px;
+    height: 50px;
+}
+.uploadimg {
+    border: 0px;
+    color: #8d8d8d;
+    cursor: pointer;
+    text-align: center;
+    color: #bdb9b9;
+    font-size: 12px;
+    margin-right: 0px;
+    width: 100%;
+}
+.add_gray_wrp input[disabled]{
+    background-color: #FFFFFF;
+    border: 0px;
+}
+.defaultLabel{
+    margin-right: 10px;
+}
+.media_cover input[type='file']{
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    width: 100%;
+    height: 120px;
+    padding: 0px;
+    margin-right:0px;
+    opacity: 0;
+    z-index: 100;
+}
+.media_cover .goodsimg{
+    width: 120px;
+    height: 120px;
+}
+.media_cover .proimg:hover{
+    cursor: pointer;
+}
+.operatebtn{
+    position: absolute;
+    bottom: 0px;
+}
+a:hover{
+    cursor: pointer;
+}
+.rightcont i{
+    position: absolute;
+    left: 220px;
+    top: 8px;
+}
+.rightcont .stand{
+    width: 460px;
+}
+#typeTbody .form-control{
+    background-color: #ffffff;
+    border:1px solid #bababa;
+    border-radius: 2px;
+    height:27px;
+}
+#typemanage .bootstrap-table{
+    margin-top: -15px;
+}
+/**图片预览**/
+#bigimages .modal-dialog {
+    right: auto;
+    width: 370px;
+    padding-top:100px;
+    padding-bottom: 80px;
+}
+#bigimages .modal-body {
+    padding: 0px;
+}
+#bigimages .modal-body img {
+    width: 100%;
+    height: 100%;
+}
+#bigimages .modal-body .goodname {
+    position: absolute;
+    right: 20%;
+    left: 20%;
+    padding-bottom: 10px;
+    z-index: 10;
+    padding-top: 20px;
+    color: #fff;
+    text-align: center;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.6);
+    font-size: 18px;
+}
+.rightcont .suitstore {
+    border: 1px solid #dbdbdb;
+    border-radius: 2px;
+    width: 50%;
+    margin-top: 10px;
+    padding: 5px;
+    position: relative;
+}
+.tagsinput{
+    border:0px;
+    padding:0px;
+    margin-bottom:15px;
+    max-height:160px;
+    overflow-y:scroll;
+}
+.tagsinput .tag{
+    background-color:#bee1fa;
+    color: #2778b3;
+    border-radius: 21px;
+    padding: 3px 15px;
+}
+.tagsinput .tag:hover {
+    background-color:#bee1fa;
+    color: #2778b3;
+    padding: 3px 20px 3px 12px;
+}
+.tagsinput-remove-link {
+    bottom: 0;
+    color:#2778b3;
+    cursor: pointer;
+    font-size: 12px;
+    opacity:0;
+    padding: 7px 7px 5px 0;
+    position: absolute;
+    right: 0;
+    text-align: right;
+    text-decoration: none;
+    top:-4px;
+    width: 100%;
+    z-index: 2;
+    display: none\9;
+}
+.tagsinput-remove-link:before{
+    color:#2778b3;
+}
+.tagsinput-add-container {
+    display: none;
+}

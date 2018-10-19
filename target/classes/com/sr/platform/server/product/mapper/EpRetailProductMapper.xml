@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sr.platform.server.product.dao.ProductDao">
+    <resultMap id="EpRetailProductMap" type="com.sr.platform.server.product.bean.EpRetailProduct">
+        <result column="recKey" property="recKey"/>
+        <result column="productId" property="productId"/>
+        <result column="productName" property="productName"/>
+        <result column="productImg" property="productImg"/>
+        <result column="unitName" property="unitName"/>
+        <result column="sortId" property="sortId"/>
+        <result column="sortName" property="sortName"/>
+    </resultMap>
+
+    <select id="getProductAll" resultMap="EpRetailProductMap">
+        select
+        ep_retailproduct.recKey,
+        productId,
+        productName,
+        unitName,
+        sortName,
+        productImg
+        FROM ep_retailproduct,ep_retailproductsort WHERE ep_retailproduct.sortId = ep_retailproductsort.sortId
+    </select>
+
+    <select id="getProductAllRef" resultMap="EpRetailProductMap">
+        select
+              @rowno:=@rowno + 1 AS recKey,
+              productId,
+              productName,
+              unitName,
+              sortId
+        FROM ep_retailproduct,(SELECT @rowno:=0) b
+    </select>
+
+    <select id="getProductById" resultMap="EpRetailProductMap" parameterType="java.lang.String">
+        select
+        ep_retailproduct.recKey,
+        productId,
+        productName,
+        unitName,
+        sortName,
+        productImg
+        FROM ep_retailproduct,ep_retailproductsort
+        WHERE ep_retailproduct.sortId = ep_retailproductsort.sortId
+        AND ep_retailproduct.sortId=#{id}
+        ORDER BY
+            productId
+    </select>
+
+    <select id="getProductByIdRef" resultMap="EpRetailProductMap" parameterType="java.lang.String">
+        select
+              @rowno:=@rowno + 1 AS recKey,
+              productId,
+              productName,
+              unitName,
+              sortId
+        FROM ep_retailproduct,(SELECT @rowno:=0) b
+        WHERE sortId=#{id}
+    </select>
+
+
+    <update id="updateRetailProductUrl" >
+        UPDATE
+        ep_retailproduct
+        SET
+        productImg=#{url}
+        WHERE
+        productId=#{productId}
+    </update>
+
+    <delete id="deleteImageById">
+        DELETE
+        FROM
+        WX_imagemanger
+        WHERE
+        imageToId=#{productId}
+        AND
+        imageId=#{imageId}
+    </delete>
+
+    <delete id="deleteImage">
+        DELETE
+        FROM
+        WX_imagemanger
+        WHERE
+        imageToId=#{productId}
+    </delete>
+</mapper>

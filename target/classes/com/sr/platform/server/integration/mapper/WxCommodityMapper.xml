@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sr.platform.server.integration.dao.IWxCommodityDao">
+    <resultMap id="WxCommodityMap" type="com.sr.platform.server.integration.bean.WxCommodity">
+        <result column="reckey" property="reckey"/>
+        <result column="commodityId" property="commodityId"/>
+        <result column="commodityName" property="commodityName"/>
+        <result column="categoryId" property="categoryId"/>
+        <result column="categoryName" property="categoryName"/>
+        <result column="unit" property="unit"/>
+        <result column="spec" property="spec"/>
+        <result column="description" property="description"/>
+        <result column="otherDescription" property="otherDescription"/>
+        <result column="salePrice" property="salePrice"/>
+        <result column="payment" property="payment"/>
+        <result column="integral" property="integral"/>
+        <result column="imageUrl" property="imageUrl"/>
+        <result column="isUsing" property="isUsing"/>
+        <result column="startDate" property="startDate"/>
+        <result column="endDate" property="endDate"/>
+        <result column="totalQuantity" property="totalQuantity"/>
+        <result column="totalSale" property="totalSale"/>
+        <result column="showIndex" property="showIndex"/>
+        <result column="remark" property="remark"/>
+        <result column="ref1" property="ref1"/>
+        <result column="createUser" property="createUser"/>
+        <result column="createDate" property="createDate"/>
+        <result column="lastUpdateUser" property="lastUpdateUser"/>
+        <result column="lastUpdateDate" property="lastUpdateDate"/>
+    </resultMap>
+
+    <select id="queryGiftAll" resultMap="WxCommodityMap">
+        SELECT a.reckey,commodityId,commodityName,categoryId,categoryName,unit,spec,description,otherDescription,payment,salePrice,integral,
+        a.isUsing,startDate,endDate,totalQuantity,totalSale,showIndex,a.remark,a.createUser,a.createDate,a.lastUpdateUser,a.lastUpdateDate,b.imageUrl
+        FROM wx_commodity a LEFT JOIN ( SELECT imageToId ,imageUrl FROM wx_imagemanger group by imageToId ) b
+        ON a.commodityId=b.imageToId
+    </select>
+
+    <select id="queryGiftById" resultMap="WxCommodityMap" parameterType="java.lang.String">
+        SELECT a.reckey,commodityId,commodityName,categoryId,categoryName,unit,spec,description,otherDescription,payment,salePrice,integral,
+                a.isUsing,startDate,endDate,totalQuantity,totalSale,showIndex,a.remark,a.createUser,a.createDate,a.lastUpdateUser,a.lastUpdateDate,b.imageUrl
+        FROM wx_commodity a LEFT JOIN ( SELECT imageToId ,imageUrl FROM wx_imagemanger group by imageToId ) b
+        ON a.commodityId=b.imageToId
+        WHERE categoryId=#{id}
+    </select>
+    <!--获取商品Id-->
+    <select id="getMaxNum" resultMap="WxCommodityMap" parameterType="java.lang.String">
+        SELECT IFNULL(max(right(commodityId, 4)),0) as commodityId
+        FROM wx_commodity
+        WHERE categoryId=#{id}
+    </select>
+
+    <select id="queryCommodityById" resultMap="WxCommodityMap" parameterType="java.lang.String">
+        SELECT reckey,commodityId,commodityName,categoryId,categoryName,unit,spec,description,otherDescription,payment,salePrice,integral,
+                isUsing,startDate,endDate,totalQuantity,totalSale,showIndex,remark,ref1,createUser,createDate,lastUpdateUser,lastUpdateDate
+        FROM wx_commodity
+        WHERE commodityId=#{id}
+    </select>
+
+    <!--插入积分商品-->
+    <insert id="insertCommodity" parameterType="com.sr.platform.server.integration.bean.WxCommodity">
+        INSERT INTO wx_commodity (
+        commodityId,
+        commodityName,
+        categoryId,
+        categoryName,
+        unit,
+        spec,
+        description,
+        otherDescription,
+        payment,
+        salePrice,
+        integral,
+        isUsing,
+        startDate,
+        endDate,
+        totalQuantity,
+        totalSale,
+        showIndex,
+        remark,
+        ref1,
+        createUser,
+        createDate,
+        lastUpdateUser,
+        lastUpdateDate
+        ) VALUES (
+        #{commodityId},#{commodityName},#{categoryId},#{categoryName},#{unit},#{spec},#{description},#{otherDescription},0,#{salePrice},#{integral},
+        #{isUsing},#{startDate},#{endDate},#{totalQuantity},0,1,#{remark},#{ref1},#{createUser},NOW(),#{createUser},NOW())
+    </insert>
+    <update id="updateCommodity" parameterType="com.sr.platform.server.integration.bean.WxCommodity">
+        UPDATE  wx_commodity
+        SET commodityName= #{commodityName},
+            unit=#{unit},
+            spec=#{spec},
+            description=#{description},
+            otherDescription=#{otherDescription},
+            salePrice=#{salePrice},
+            integral=#{integral},
+            isUsing=#{isUsing},
+            startDate=#{startDate},
+            endDate=#{endDate},
+            totalQuantity=#{totalQuantity},
+            remark=#{remark},
+            ref1=#{ref1},
+            lastUpdateUser=#{createUser},
+            lastUpdateDate=NOW()
+        WHERE commodityId=#{commodityId}
+    </update>
+
+    <delete id="deleteCategory" parameterType="java.lang.Integer">
+        DELETE  FROM  wx_commodity
+        WHERE reckey=#{id}
+    </delete>
+</mapper>

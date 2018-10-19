@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+ <mapper namespace="com.sr.platform.server.company.dao.ExcelDao">
+    <resultMap id="rechargecollectMap" type="com.sr.platform.server.company.bean.WxBatchrechargecollect">
+        <result column="reckey" property="reckey"/>
+        <result column="bookingId" property="bookingId"/>
+        <result column="isMoney" property="isMoney"/>
+        <result column="bookingFlag" property="bookingFlag"/>
+        <result column="companyId" property="companyId"/>
+        <result column="companyName" property="companyName"/>
+        <result column="collectMoney" property="collectMoney"/>
+        <result column="sumStaff" property="sumStaff"/>
+        <result column="checkMoney" property="checkMoney"/>
+        <result column="ref1" property="ref1"/>
+        <result column="ref2" property="ref2"/>
+        <result column="ref3" property="ref3"/>
+        <result column="remark" property="remark"/>
+        <result column="createDate" property="createDate"/>
+        <result column="createUserId" property="createUserId"/>
+        <result column="lastupDate" property="lastupDate"/>
+        <result column="lastupdateUserId" property="lastupdateUserId"/>
+        <result column="checkDate" property="checkDate"/>
+        <result column="checkUserId" property="checkUserId"/>
+        <result column="invalidDate" property="invalidDate"/>
+        <result column="invalidUserId" property="invalidUserId"/>
+    </resultMap>
+    <!--创建充值单号-->
+    <select id="findBookingId"  parameterType="map" resultType="map">
+        select IFNULL(right(max(bookingId),4),0) as bookingId
+        from wx_batchrechargecollect
+        where bookingId like #{headtype}
+    </select>
+    <!--查询会员卡中记录-->
+    <select id="getMemberNum"  parameterType="java.lang.String" resultType="map">
+        SELECT code,openId,memberId,memberName,phone,balance
+        FROM wx_member
+        where code= #{code} OR phone=#{code}
+    </select>
+    <!--检查单号-->
+    <select id="checkBooking"  parameterType="map" resultType="map">
+        SELECT bookingId FROM wx_batchrechargecollect where bookingId= #{bookingId}
+    </select>
+
+    <!--检查用户是否存在未审核批量充值单-->
+    <select id="checkBookingStaff"  parameterType="java.lang.String" resultType="map">
+        SELECT c.bookingId AS bookingId
+        FROM wx_batchrechargecollect c
+        LEFT JOIN wx_batchrechargedetail d ON d.bookingId=c.bookingId
+        WHERE c.bookingFlag=0 AND d.openid=#{id}
+    </select>
+
+    <!--查询本次未导入的已存在员工-->
+    <select id="selectStaffUnExist"  parameterType="map" resultType="map">
+       SELECT staffName,ref1,'0'AS money ,ref2 ,'0'AS flag FROM wx_companystaff where companyId=#{companyId} and ref2 NOT IN
+        <foreach collection="memberIdList" index="index"  item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+    <!--插入员工信息-->
+    <insert id="InsertStaffs">
+        INSERT INTO wx_companystaff (
+            companyId,
+            companyName,
+            staffName,
+            openId,
+            memberId,
+            memberName,
+            ref1,
+            ref2,
+            createUserId,
+            lastupdateUserId
+        )VALUES
+        <foreach collection="functions" index="index" item="item" separator=",">
+            (#{item.companyId,jdbcType=VARCHAR},#{item.companyName,jdbcType=VARCHAR}, #{item.staffName,jdbcType=VARCHAR}, #{item.openId,jdbcType=VARCHAR},
+            #{item.memberId,jdbcType=VARCHAR},  #{item.memberName,jdbcType=VARCHAR},#{item.ref1,jdbcType=VARCHAR},#{item.ref2,jdbcType=VARCHAR},
+            #{item.createUserId,jdbcType=VARCHAR}, #{item.lastUpdateUserId,jdbcType=VARCHAR})
+        </foreach>
+    </insert>
+    <!--插入批量充值汇总-->
+    <insert id="insertBatchrechargecollect" parameterType="map">
+        INSERT INTO wx_batchrechargecollect (
+        bookingId,
+        bookingFlag,
+        companyId,
+        companyName,
+        collectMoney,
+        sumStaff,
+        ref1,
+        ref2,
+        ref3,
+        remark,
+        createDate,
+        createUserId,
+        lastupDate,
+        lastupdateUserId
+        )VALUES (
+            #{bookingId},
+            #{bookingFlag},
+            #{companyId},
+            #{companyName},
+            #{collectMoney},
+            #{sumStaff},
+            #{ref1},
+            #{ref2},
+            '',
+            #{remark},
+            NOW(),
+            #{userId},
+            NOW(),
+            #{userId}
+        )
+    </insert>
+    <!--插入批量充值明细-->
+    <insert id="insertBatchrechargedetail" parameterType="map">
+        INSERT INTO wx_batchrechargedetail (
+            bookingId,
+            companyId,
+            memberId,
+            memberName,
+            staffName,
+            openId,
+            rechargeBefore,
+            rechargeAmount,
+            rechargeAfter,
+            ref1,
+            ref2,
+            ref3,
+            remark,
+            createDate,
+            createUserId,
+            lastupDate,
+            lastupdateUserId
+        )SELECT
+            #{bookingId},
+            #{companyId},
+            a.memberId,
+            a.memberName,
+            b.staffName,
+            a.openId,
+            #{rechargeBefore},
+            #{rechargeAmount},
+            #{rechargeAfter},
+            #{ref1},
+            #{ref2},
+            '',
+            #{remark},
+            NOW(),
+            #{userId},
+            NOW(),
+            #{userId}
+          from  wx_member a,wx_companystaff b
+          where a.code=#{ref2} AND b.ref2=#{ref2}
+    </insert>
+    <!--查询批量充值单汇总列表-->
+    <select id="queryRechargeCollect"  parameterType="map" resultMap="rechargecollectMap">
+        SELECT * FROM wx_batchrechargecollect
+        WHERE  ref1=#{locId}  AND (createDate BETWEEN  #{startDate} AND #{endDate})
+    </select>
+
+    <select id="selectRechargeReport"  resultMap="rechargecollectMap">
+        SELECT * FROM wx_batchrechargecollect
+        WHERE  (createDate BETWEEN  #{startDate} AND #{endDate}) AND
+                ref1=#{locId} AND bookingFlag = 1 AND companyId IN
+        <foreach collection="str" item="id" index="index" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </select>
+
+    <select id="selectRechargeReportLoc"  resultType="map">
+        SELECT locId,locName FROM wx_batchrechargecollect s,ep_loc
+        WHERE s.ref1 = ep_loc.locId AND
+        (s.createDate BETWEEN  #{startDate} AND #{endDate}) AND bookingFlag = 1 AND companyId IN
+        <foreach collection="str" item="id" index="index" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+        GROUP BY locId
+    </select>
+
+    <!--查询批量充值单汇总列表-->
+    <select id="queryRechargeTansfer"  parameterType="map" resultType="map">
+        SELECT(collectMoney - CAST(IFNULL(ref2,0) AS decimal(9,2))) AS checkMoney,bookingId
+        FROM wx_batchrechargecollect
+        WHERE bookingFlag=0 AND
+               isMoney=0 AND
+               ref1=#{locId} AND
+               companyId =#{companyId}
+        ORDER BY  createDate DESC
+    </select>
+
+    <!--查询批量充值单汇总-->
+    <select id="queryRecharge" parameterType="java.lang.String" resultMap="rechargecollectMap">
+        SELECT * FROM wx_batchrechargecollect
+        WHERE bookingId=#{id}
+    </select>
+
+    <!--查询批量充值单明细-->
+    <select id="queryRechargeDetail"  parameterType="map" resultType="map">
+        SELECT * FROM wx_batchrechargedetail
+        WHERE  bookingId=#{bookingId}
+    </select>
+    <!--更新批量充值单汇总-->
+    <update id="updateBatchRechargeCollect" parameterType="map">
+        UPDATE wx_batchrechargecollect
+        SET  collectMoney =#{collectMoney},
+              lastupDate=NOW(),
+              ref2=#{ref2},
+              lastUpdateUserId=#{userId}
+        WHERE bookingId=#{bookingId}
+    </update>
+
+    <!--更新批量充值单汇总-->
+    <update id="checkBatchRechargeCollect" parameterType="map">
+        UPDATE wx_batchrechargecollect
+        SET
+            checkMoney=#{checkMoney},
+            bookingFlag=#{bookingFlag},
+            checkUserId=#{userId},
+            checkDate=NOW()
+        WHERE bookingId=#{bookingId}
+    </update>
+    <!--更新批量充值单明细-->
+    <update id="updateBatchRechargeDetail" parameterType="map">
+        UPDATE wx_batchrechargedetail
+        SET   rechargeAmount =#{rechargeAmount},
+              lastupDate=NOW(),
+              lastUpdateUserId=#{userId}
+        WHERE bookingId =#{bookingId} AND
+              ref2=#{ref2}
+    </update>
+    <!--批量更新会员余额-->
+    <update id="updateBatchMember" parameterType="map">
+          UPDATE wx_member b,
+            (SELECT ref2,rechargeAmount
+            FROM wx_batchrechargedetail
+            WHERE bookingId=#{bookingId})a
+          SET b.balance=b.balance+a.rechargeAmount,b.lastUpdateDate=NOW(),b.lastUpdateUser=#{userId}
+          WHERE b.code=a.ref2
+    </update>
+    <!--插入充值流水-->
+    <insert id="insertChangeIntegration" parameterType="map">
+        insert into wx_recharge (
+            openId,
+            rechargeId,
+            money,
+            actualMoney,
+            presentMoney,
+            beforeRechargeBalance,
+            afterRechargeBalance,
+            beforeMoneyRate,
+            afterMoneyRate,
+            status,
+            ref1,
+            ref2,
+            ref3,
+            remark,
+            createUser,
+            createDate,
+            lastUpdateUser,
+            lastUpdateDate
+        )select
+        b.openId,
+        CONCAT(DATE_FORMAT(NOW(),'%Y%m%d'),round(round(rand(),11)*100000000000)),
+        a.rechargeAmount,
+        a.rechargeAmount,
+        0,
+        b.balance,
+        a.rechargeAmount+b.balance,
+        0,
+        0,
+        1,
+        '',
+        a.bookingId,
+        '2',
+        '',
+        #{userId},
+        NOW(),
+        #{userId},
+        NOW()
+         from wx_member b,(SELECT bookingId, ref2,rechargeAmount FROM wx_batchrechargedetail WHERE bookingId=#{bookingId})a
+        WHERE b.code=a.ref2
+    </insert>
+
+    <select id="getMemberRechargeReport"  resultType="map">
+        SELECT code,memberId,memberName,wx_recharge.createDate,actualMoney,IFNULL(wx_recharge.ref3,1) AS ref3
+        FROM wx_recharge,wx_member
+        WHERE wx_member.openId = wx_recharge.openId AND
+              (wx_recharge.createDate BETWEEN  #{startDate} AND #{endDate})
+        ORDER BY  memberId,wx_recharge.createDate
+    </select>
+
+    <select id="getMemberRechargeReportSelect"  resultType="map">
+        SELECT code,memberId,memberName,wx_recharge.createDate,actualMoney,IFNULL(wx_recharge.ref3,1) AS ref3
+        FROM wx_recharge,wx_member
+        WHERE wx_member.openId = wx_recharge.openId AND
+            (memberId BETWEEN  #{str1} AND #{str2}) AND
+        (wx_recharge.createDate BETWEEN  #{startDate} AND #{endDate})
+        ORDER BY  memberId,wx_recharge.createDate
+    </select>
+
+    <update id="invalidRecharge" parameterType="map">
+          UPDATE wx_batchrechargecollect
+          SET bookingFlag =#{status},invalidUserId=#{userId},invalidDate=NOW()
+          WHERE  bookingId=#{bookingId}
+    </update>
+
+    <update id="updateRechargeMoney"  parameterType="java.lang.String">
+        UPDATE wx_batchrechargecollect
+        SET isMoney=1
+        WHERE  bookingId=#{id}
+    </update>
+
+
+    <insert id="insertWxReceipt" parameterType="map">
+        insert into wx_receipt (bookingId,refbookingId,checkMoney,payMoney,source,locId,companyId)values(#{bookingid},#{refbookingid},#{paymoney},#{paymoney},#{source},#{locid},#{companyid})
+    </insert>
+
+    <select id="getWxReceipt"  parameterType="java.lang.String" resultType="com.sr.platform.server.company.bean.WxReceipt">
+        SELECT bookingId,refbookingId,checkMoney,payMoney,source,locId,companyId
+        FROM wx_receipt
+        WHERE bookingId = #{id} OR refbookingId=#{id}
+    </select>
+</mapper>

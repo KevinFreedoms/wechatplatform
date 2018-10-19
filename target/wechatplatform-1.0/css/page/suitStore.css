@@ -1,0 +1,100 @@
+.addsuitstore .leftcont{
+    width:7%;
+    text-align: right;
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+.addsuitstore .rightcont .choseStorebtn{
+    border:  1px solid #4AA6FC;
+    color: #4AA6FC;
+    padding:0px 25px;
+    font-size: 18px;
+    margin-right: 15px;
+}
+.storeinfo{
+    color: #999999;
+}
+.addsuitstore .rightcont{
+    margin-bottom: 20px;
+}
+.addsuitstore .smalltitle {
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #e6e6e6;
+}
+.addsuitstore .smalltitle span{
+    color: #999999;
+}
+.addsuitstore .smalltitle .titleName{
+    font-size: 14.0px;
+    font-weight: bold;
+    font-family: Roboto, BlinkMacSystemFont, "Helvetica Neue", Arial, "Microsoft Yahei", "WenQuanYi Micro Hei", "Pingfang SC", sans-serif;
+    margin-bottom: 0px;
+    float: left;
+    margin-right: 10px;
+    color: #666666;
+}
+.importToolip{
+    margin-bottom:30px;
+}
+.addsuitstore .rightcont p{
+    color: #bdbdbd;
+    font-size: 12px;
+    margin-bottom: 0px;
+    margin-top: 5px;
+}
+.serviceInfo{
+    margin-top: 30px;
+}
+.serviceInfo input,.serviceInfo textarea{
+    width: 350px;
+}
+.serviceInfo textarea{
+    height: 100px;
+    resize:none;
+    padding:5px 10px;
+}
+/************2014-04-23********************/
+.importToolip .seccessInfo {
+    background-color: #F6FFED;
+    border: 1px solid #B7EB8F;
+    padding:15px;
+    border-radius: 4px;
+}
+.importToolip .closetoolip {
+    float: right;
+    color: #444444;
+}
+.importToolip p {
+    color: #333333;
+    font-size: 14px;
+    margin-bottom: 0px;
+}
+.importToolip .importInfo {
+    color: #999999;
+    font-size: 12px;
+    margin-left: 35px;
+}
+.importToolip img {
+    height: 20px;
+    width: 20px;
+    margin-right: 15px;
+}
+.importToolip  .errorInfo{
+    background-color: #FFF1F0;
+    border: 1px solid #FFA39E;
+    padding:15px;
+    border-radius: 4px;
+}
+.importToolip  .waitloading{
+    background-color: #FFFBE6;
+    border: 1px solid #FFE58F;
+    padding:15px;
+    border-radius: 4px;
+}
+.bootstrap-select.btn-group .dropdown-menu{
+    height:300px!important;
+}
+.bootstrap-select.btn-group .dropdown-menu.inner{
+    height:240px!important;
+}

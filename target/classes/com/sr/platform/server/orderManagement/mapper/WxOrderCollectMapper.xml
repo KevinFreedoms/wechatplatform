@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sr.platform.server.orderManagement.dao.IWxOrderCollectDao">
+<select id="getOrderCollect" resultType="com.sr.platform.server.orderManagement.bean.WxOrderCollect">
+    SELECT
+      c.bookingId,
+      c.locId,
+      c.locName,
+      c.bookingSource,
+      c.bookingStatus,
+      c.bookingType,
+      c.price,
+      c.sumPrice,
+      c.company,
+      c.address,
+      c.phone,
+      m.memberName,
+      DATE_FORMAT(c.createDate,'%Y-%m-%d %T') createDate,
+      c.remark,
+      m.memberId,
+      c.deliveryTime,
+      c.ref1,
+      c.packingPrice,
+      c.deliveryPrice
+    FROM
+      wx_ordercollect c
+    LEFT JOIN
+      wx_member m
+    ON
+      c.openid=m.openid
+    WHERE
+      c.locId=#{locId}
+    AND
+      c.createDate <![CDATA[ >= ]]> #{startDate}
+    AND
+      c.createDate<![CDATA[ <= ]]>#{endDate}
+    <if test="bookingType!=null and bookingType!='9999'">
+      AND c.bookingType=#{bookingType}
+    </if>
+    <if test="list!=null and list.size()!=0">
+        AND c.bookingStatus in
+        <foreach collection="list" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </if>
+    <if test="search!=null and search!=''">
+        AND
+        CONCAT(
+        m.memberId,
+        m.memberName,
+        c.phone,
+        c.createDate,
+        c.company,
+        c.address,
+        c.remark,
+        c.bookingSource,
+        c.price,
+        c.bookingId,
+        c.locId,
+        c.locName,
+        c.ref1,
+        c.packingPrice,
+        c.deliveryPrice
+        )
+        LIKE
+        CONCAT('%',#{search},'%')
+    </if>
+    ORDER BY c.recKey
+    LIMIT #{start},#{pageSize}
+</select>
+<select id="reCount" resultType="int">
+    SELECT
+    count(0)
+    FROM
+    wx_ordercollect c
+    LEFT JOIN
+    wx_member m
+    ON
+    c.openid=m.openid
+    WHERE
+    c.locId=#{locId}
+    AND
+    c.createDate <![CDATA[ >= ]]> #{startDate}
+    AND
+    c.createDate<![CDATA[ <= ]]>#{endDate}
+    <if test="bookingType!=null and bookingType!='9999'">
+        AND c.bookingType=#{bookingType}
+    </if>
+    <if test="list!=null and list.size()!=0">
+        AND c.bookingStatus in
+        <foreach collection="list" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </if>
+    <if test="search!=null and search!=''">
+        AND
+        CONCAT(
+        m.memberId,
+        m.memberName,
+        c.phone,
+        c.createDate,
+        c.company,
+        c.address,
+        c.remark,
+        c.bookingSource,
+        c.price,
+        c.bookingId,
+        c.locId,
+        c.locName,
+        c.ref1,
+        c.packingPrice,
+        c.deliveryPrice
+        )
+        LIKE
+        CONCAT('%',#{search},'%')
+    </if>
+</select>
+    <select id="getOrderCollectEx" resultType="com.sr.platform.server.orderManagement.bean.WxOrderCollect">
+        SELECT
+        c.bookingId,
+        c.locId,
+        c.locName,
+        c.bookingSource,
+        c.bookingStatus,
+        c.bookingType,
+        c.price,
+        c.sumPrice,
+        c.company,
+        c.address,
+        c.phone,
+        m.memberName,
+        DATE_FORMAT(c.createDate,'%Y-%m-%d %T') createDate,
+        c.remark,
+        m.memberId,
+        c.deliveryTime,
+        c.ref1,
+        c.packingPrice,
+        c.deliveryPrice
+        FROM
+        wx_ordercollect c
+        LEFT JOIN
+        wx_member m
+        ON
+        c.openid=m.openid
+        WHERE
+        c.locId=#{locId}
+        AND
+        c.createDate <![CDATA[ >= ]]> #{startDate}
+        AND
+        c.createDate<![CDATA[ <= ]]>#{endDate}
+        <if test="bookingType!=null and bookingType!='9999'">
+            AND c.bookingType=#{bookingType}
+        </if>
+        <if test="list!=null and list.size()!=0">
+            AND c.bookingStatus in
+            <foreach collection="list" index="index" item="item" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+        <if test="search!=null and search!=''">
+            AND
+            CONCAT(
+            m.memberId,
+            m.memberName,
+            c.phone,
+            c.createDate,
+            c.company,
+            c.address,
+            c.remark,
+            c.bookingSource,
+            c.price,
+            c.bookingId,
+            c.locId,
+            c.locName,
+            c.ref1,
+            c.packingPrice,
+            c.deliveryPrice
+            )
+            LIKE
+            CONCAT('%',#{search},'%')
+        </if>
+        ORDER BY c.recKey
+    </select>
+</mapper>
