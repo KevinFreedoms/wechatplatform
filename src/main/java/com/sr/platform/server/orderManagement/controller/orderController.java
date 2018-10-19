@@ -44,8 +44,6 @@ public class orderController {
             @RequestParam String search
 
     ) {
-        System.out.println("测试切换member");
-        System.out.println("member");
         return os.getOrderCollect(startDate, endDate, bookingType, bookingStatus, locId, pageSize, start, search);
     }
 
