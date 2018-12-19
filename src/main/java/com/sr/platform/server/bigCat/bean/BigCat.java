@@ -20,11 +20,5 @@ public class BigCat {
         this.age = age;
     }
     
-    @Override
-    public String toString() {
-        return "BigCat{" +
-                "name='" + name + '\'' +
-                ", age='" + age + '\'' +
-                '}';
-    }
+   
 }
