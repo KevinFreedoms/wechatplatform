@@ -3,7 +3,7 @@ package com.sr.platform.server.bigCat.bean;
 public class BigCat {
     private String name;
     private String age;
-
+    BigCat(){}
     public String getName() {
         return name;
     }
@@ -19,7 +19,7 @@ public class BigCat {
     public void setAge(String age) {
         this.age = age;
     }
-
+    
     @Override
     public String toString() {
         return "BigCat{" +
