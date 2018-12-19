@@ -3,7 +3,7 @@ package com.sr.platform.server.bigCat.bean;
 public class BigCat {
     private String name;
     private String age;
-    BigCat(){}
+    public BigCat(){}
     public String getName() {
         return name;
     }
